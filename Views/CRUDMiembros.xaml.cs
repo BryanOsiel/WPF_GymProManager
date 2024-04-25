@@ -502,6 +502,146 @@ namespace WPF_GymProManager.Views
             }
         }
 
+        public void Eliminar(int clienteID)
+        {
+            try
+            {
+                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    string sqlQuery = @"
+                                        SELECT 
+                                            m.ID AS ID_Cliente,
+                                            m.TSucursalID,
+                                            m.TDatosClientesID,
+                                            m.MembresiaID,
+                                            m.FechaRegistro,
+                                            m.Acceso,
+                                            dm.Nombre AS Nombre,
+                                            dm.ApellidoPaterno AS Apellido,
+                                            dm.ApellidoMaterno AS ApellidoMaterno,
+                                            dm.Genero AS Genero,
+                                            dm.FechaNacimiento AS FechaNacimiento,
+                                            dm.CorreoElectronico AS Email,
+                                            dm.Telefono AS Telefono,
+                                            dc.ID AS DireccionID,
+                                            dc.Numero AS DireccionNumero,
+                                            dc.Calle AS DireccionCalle,
+                                            dc.Colonia AS DireccionColonia,
+                                            dc.CodigoPostal AS DireccionCodigoPostal,
+                                            dc.Municipio AS DireccionMunicipio,
+                                            dc.Estado AS DireccionEstado,
+                                            mb.ID AS MembresiaID,
+                                            mb.TipoMembresia AS Tipo_Membresia
+                                        FROM 
+                                            tclientes m
+                                        JOIN 
+                                            tdatosclientes dm ON m.TDatosClientesID = dm.ID
+                                        JOIN 
+                                            tdireccionclientes dc ON dm.TDireccionClientesID = dc.ID
+                                        JOIN 
+                                            tmembresias mb ON m.MembresiaID = mb.ID
+                                        WHERE 
+                                            m.ID = @ClienteID;";
+
+
+
+                    MySqlCommand com = new MySqlCommand(sqlQuery, connection);
+                    com.Parameters.AddWithValue("@ClienteID", clienteID);
+
+                    using (MySqlDataReader reader = com.ExecuteReader())
+                    {
+
+                        if (reader.Read())
+                        {
+                            // Mostrar datos en los cuadros de texto
+                            this.tbCalle.Text = reader["DireccionCalle"].ToString();
+                            this.tbNumero.Text = reader["DireccionNumero"].ToString();
+                            this.tbCodigoPostal.Text = reader["DireccionCodigoPostal"].ToString();
+                            this.tbColonia.Text = reader["DireccionColonia"].ToString();
+                            this.tbMunicipio.Text = reader["DireccionMunicipio"].ToString();
+                            this.tbEstado.Text = reader["DireccionEstado"].ToString();
+                            this.tbNombre.Text = reader["Nombre"].ToString();
+                            this.tbApellidoPaterno.Text = reader["Apellido"].ToString();
+                            this.tbApellidoMaterno.Text = reader["ApellidoMaterno"].ToString();
+                            this.tbGenero.Text = reader["Genero"].ToString();
+                            this.dpFechaNacimiento.SelectedDate = Convert.ToDateTime(reader["FechaNacimiento"]);
+                            this.tbEmail.Text = reader["Email"].ToString();
+                            this.tbTelefono.Text = reader["Telefono"].ToString();
+                            this.tbMembresia.Text = reader["Tipo_Membresia"].ToString();
+                            this.dpFechaRegistro.SelectedDate = Convert.ToDateTime(reader["FechaRegistro"]);
+                            this.tbCodigoAcceso.Text = reader["Acceso"].ToString();
+                        }
+                    }
+                }
+            }
+            catch (MySqlException ex)
+            {
+                // Manejar excepciones de MySQL
+                Console.WriteLine("Error de MySQL: " + ex.Message);
+            }
+            catch (Exception ex)
+            {
+                // Manejar otras excepciones
+                Console.WriteLine("Error: " + ex.Message);
+            }
+        }
+
+        private void btnEliminar_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Obtener el ID del cliente que se desea eliminar
+                int clienteID = ObtenerIDCliente(tbNombre.Text); // Reemplaza esto con la lógica real para obtener el ID del cliente
+
+                // Si el ID del cliente es válido (-1 indica que no se encontró el cliente)
+                if (clienteID != -1)
+                {
+                    // Confirmar si realmente se desea eliminar al cliente
+                    MessageBoxResult result = MessageBox.Show("¿Estás seguro de que quieres eliminar este cliente?", "Confirmar Eliminación", MessageBoxButton.YesNo);
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+                        // Obtener la cadena de conexión desde App.config
+                        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+                        // Establecer conexión con la base de datos
+                        using (MySqlConnection connection = new MySqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            // Eliminar al cliente de las tablas relacionadas
+                            string deleteQuery = @"
+                        DELETE tclientes, tdatosclientes, tdireccionclientes 
+                        FROM tclientes
+                        LEFT JOIN tdatosclientes ON tclientes.TDatosClientesID = tdatosclientes.ID
+                        LEFT JOIN tdireccionclientes ON tdatosclientes.TDireccionClientesID = tdireccionclientes.ID
+                        WHERE tclientes.ID = @ClienteID";
+
+                            MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, connection);
+                            deleteCmd.Parameters.AddWithValue("@ClienteID", clienteID);
+                            deleteCmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Cliente eliminado correctamente.");
+                            //Regresa a la ventana de miembros
+                            Content = new Miembros();
+                        }
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("No se encontró ningún cliente con ese nombre.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al eliminar el cliente: " + ex.Message);
+            }
+        }
+
     }
 }
 

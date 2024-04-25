@@ -209,6 +209,7 @@
                     <Button x:Name="btnRegresar" Content="Regresar" Grid.Column="1" Grid.Row="0" Margin="30,20,30,10" FontSize="15" Style="{DynamicResource ButtonStyle}" Foreground="White" Click="btnRegresar_Click"/>
                     <Button x:Name="btnCrear" Content="Crear" Grid.Column="2" Grid.Row="0" Margin="10,19,51,11" FontSize="15" Cursor="" Style="{DynamicResource ButtonStyle}" Foreground="White" Visibility="Hidden" Click="btnCrear_Click"/>
                     <Button x:Name="btnActualizar" Content="Actualizar" Grid.Column="2" Grid.Row="0" Margin="10,19,51,11" FontSize="15" Cursor="" Style="{DynamicResource ButtonStyle}" Foreground="White" Visibility="Hidden" Click="btnActualizar_Click"/>
+                    <Button x:Name="btnEliminar" Content="Eliminar" Grid.Column="2" Grid.Row="0" Margin="10,19,51,11" FontSize="15" Cursor="" Style="{DynamicResource ButtonStyle}" Foreground="White" Visibility="Hidden" Click="btnEliminar_Click"/>
                 </Grid>
 
             </Grid>

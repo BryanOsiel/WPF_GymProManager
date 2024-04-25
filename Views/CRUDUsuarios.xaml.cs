@@ -1,4 +1,5 @@
 ﻿using MySql.Data.MySqlClient;
+using MySqlX.XDevAPI.Common;
 using System;
 using System.Configuration;
 using System.Linq;
@@ -19,9 +20,6 @@ namespace WPF_GymProManager.Views
         {
             Content = new Usuarios();
         }
-
-        #region CRUD
-        #region Crear
 
         private void btnCrear_Click(object sender, RoutedEventArgs e)
         {
@@ -158,11 +156,9 @@ namespace WPF_GymProManager.Views
                 MessageBox.Show("Error al crear el empleado: " + ex.Message);
             }
         }
-            #endregion
-        
+
         public int IdUsuario;
         //private Button sender;
-        #region Leer
         public void Consultar(int empleadoID)
         {
             try
@@ -250,7 +246,7 @@ namespace WPF_GymProManager.Views
                 Console.WriteLine("Error: " + ex.Message);
             }
         }
-        #region Editar
+
         public void Editar(int empleadoID)
         {
             try
@@ -338,7 +334,6 @@ namespace WPF_GymProManager.Views
             }
         }
 
-        #endregion
         private void btnActualizar_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -415,31 +410,36 @@ namespace WPF_GymProManager.Views
 
                     // Actualizar información del empleado
                     string updateQuery = @"
-                                            UPDATE templeados AS t
-                                            JOIN tdatosempleados AS td ON t.TDatosEmpleadosID = td.ID
-                                            JOIN tdireccionempleados AS tdirec ON td.TDireccionEmpleadosID = tdirec.ID
-                                            SET 
-                                                tdirec.Calle = @Calle,
-                                                tdirec.Numero = @Numero,
-                                                tdirec.Colonia = @Colonia,
-                                                tdirec.CodigoPostal = @CodigoPostal,
-                                                tdirec.Municipio = @Municipio,
-                                                tdirec.Estado = @Estado,
-                                                td.Nombre = @Nombre,
-                                                td.ApellidoPaterno = @ApellidoPaterno,
-                                                td.ApellidoMaterno = @ApellidoMaterno,
-                                                td.Genero = @Genero,
-                                                td.FechaNacimiento = @FechaNacimiento,
-                                                td.CorreoElectronico = @CorreoElectronico,
-                                                td.Telefono = @Telefono,
-                                                t.Turno = @Turno,
-                                                t.FechaContratacion = @FechaContratacion,
-                                                t.Salario = @Salario,
-                                                t.Acceso = @Acceso,
-                                                t.Puesto = @Puesto,
-                                                t.Contrasena = @Contrasena
-                                            WHERE
-                                                td.ID = @EmpleadoID"; // Cambiado de NombreID a EmpleadoID
+                UPDATE templeados AS t
+                JOIN tdatosempleados AS td ON t.TDatosEmpleadosID = td.ID
+                JOIN tdireccionempleados AS tdirec ON td.TDireccionEmpleadosID = tdirec.ID
+                SET 
+                    tdirec.Calle = @Calle,
+                    tdirec.Numero = @Numero,
+                    tdirec.Colonia = @Colonia,
+                    tdirec.CodigoPostal = @CodigoPostal,
+                    tdirec.Municipio = @Municipio,
+                    tdirec.Estado = @Estado,
+                    td.Nombre = @Nombre,
+                    td.ApellidoPaterno = @ApellidoPaterno,
+                    td.ApellidoMaterno = @ApellidoMaterno,
+                    td.Genero = @Genero,
+                    td.FechaNacimiento = @FechaNacimiento,
+                    td.CorreoElectronico = @CorreoElectronico,
+                    td.Telefono = @Telefono,
+                    t.Turno = @Turno,
+                    t.FechaContratacion = @FechaContratacion,
+                    t.Salario = @Salario,
+                    t.Acceso = @Acceso,
+                    t.Puesto = @Puesto";
+
+                    if (!string.IsNullOrEmpty(tbContraseña.Text))
+                    {
+                        // Agregar la actualización de la contraseña si se proporciona
+                        updateQuery += ", t.Contrasena = @Contrasena";
+                    }
+
+                    updateQuery += " WHERE td.ID = @EmpleadoID"; // Cambiado de NombreID a EmpleadoID
 
                     MySqlCommand updateCmd = new MySqlCommand(updateQuery, connection);
                     updateCmd.Parameters.AddWithValue("@Puesto", tbPuesto.Text);
@@ -447,7 +447,6 @@ namespace WPF_GymProManager.Views
                     updateCmd.Parameters.AddWithValue("@FechaContratacion", dpFechaContratacion.SelectedDate);
                     updateCmd.Parameters.AddWithValue("@Salario", salario);
                     updateCmd.Parameters.AddWithValue("@Acceso", tbCodigoAcceso.Text);
-                    updateCmd.Parameters.AddWithValue("@Contrasena", tbContraseña.Text);
                     updateCmd.Parameters.AddWithValue("@Nombre", tbNombre.Text);
                     updateCmd.Parameters.AddWithValue("@ApellidoPaterno", tbApellidoPaterno.Text);
                     updateCmd.Parameters.AddWithValue("@ApellidoMaterno", tbApellidoMaterno.Text);
@@ -462,19 +461,25 @@ namespace WPF_GymProManager.Views
                     updateCmd.Parameters.AddWithValue("@Municipio", tbMunicipio.Text);
                     updateCmd.Parameters.AddWithValue("@Estado", tbEstado.Text);
                     updateCmd.Parameters.AddWithValue("@EmpleadoID", empleadoID); // Cambiado de NombreID a EmpleadoID
+
+                    // Agregar la contraseña solo si se proporciona
+                    if (!string.IsNullOrEmpty(tbContraseña.Text))
+                    {
+                        updateCmd.Parameters.AddWithValue("@Contrasena", tbContraseña.Text);
+                    }
+
                     updateCmd.ExecuteNonQuery();
 
                     MessageBox.Show("Empleado actualizado correctamente.");
                     Content = new Usuarios();
                 }
-
-
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Error al actualizar el empleado: " + ex.Message);
             }
         }
+
 
         private int ObtenerIDEmpleado(string nombreEmpleado)
         {
@@ -604,48 +609,52 @@ namespace WPF_GymProManager.Views
             try
             {
 
-                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
                 // Obtener el ID del empleado que deseas eliminar
                 int empleadoID = ObtenerIDEmpleado(tbNombre.Text); // Reemplaza esto con la lógica real para obtener el ID del empleado
 
                 // Validar que se haya encontrado un empleado con el nombre proporcionado
-                if (empleadoID == -1)
+                if (empleadoID != -1)
                 {
-                    MessageBox.Show("No se encontró ningún empleado con el nombre proporcionado.");
-                    return;
+                    // Confirmar si realmente se desea eliminar al cliente
+                    MessageBoxResult result = MessageBox.Show("¿Estás seguro de que quieres eliminar este cliente?", "Confirmar Eliminación", MessageBoxButton.YesNo);
+
+
+                    if (result == MessageBoxResult.Yes)
+                    {
+
+                        string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+                        using (MySqlConnection connection = new MySqlConnection(connectionString))
+                        {
+                            connection.Open();
+
+                            // Consulta para eliminar al empleado
+                            string deleteQuery = @"
+                                                    DELETE t, td, tdirec
+                                                    FROM templeados AS t
+                                                    JOIN tdatosempleados AS td ON t.TDatosEmpleadosID = td.ID
+                                                    JOIN tdireccionempleados AS tdirec ON td.TDireccionEmpleadosID = tdirec.ID
+                                                    WHERE td.ID = @EmpleadoID"; // Cambiado de NombreID a EmpleadoID
+
+                            MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, connection);
+                            deleteCmd.Parameters.AddWithValue("@EmpleadoID", empleadoID); // Cambiado de NombreID a EmpleadoID
+                            deleteCmd.ExecuteNonQuery();
+
+                            MessageBox.Show("Empleado eliminado correctamente.");
+                            Content = new Usuarios();
+                        }
+                    }
                 }
-
-                // Consulta para eliminar al empleado
-                string deleteQuery = @"
-        DELETE t, td, tdirec
-        FROM templeados AS t
-        JOIN tdatosempleados AS td ON t.TDatosEmpleadosID = td.ID
-        JOIN tdireccionempleados AS tdirec ON td.TDireccionEmpleadosID = tdirec.ID
-        WHERE td.ID = @EmpleadoID"; // Cambiado de NombreID a EmpleadoID
-
-                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                else
                 {
-                    connection.Open();
-
-                    MySqlCommand deleteCmd = new MySqlCommand(deleteQuery, connection);
-                    deleteCmd.Parameters.AddWithValue("@EmpleadoID", empleadoID); // Cambiado de NombreID a EmpleadoID
-                    deleteCmd.ExecuteNonQuery();
-
-                    MessageBox.Show("Empleado eliminado correctamente.");
-                    Content = new Usuarios();
+                    MessageBox.Show("No se encontró ningún cliente con ese nombre.");
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al eliminar el empleado: " + ex.Message);
+                MessageBox.Show("Error al eliminar el cliente: " + ex.Message);
             }
-
         }
+
     }
-    #endregion
-
-    #endregion
 }
-
-

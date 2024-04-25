@@ -157,7 +157,7 @@ namespace WPF_GymProManager.Views
             // Obtener el ID del usuario que se desea consultar desde el botón
             int id = (int)((Button)sender).CommandParameter;
 
-            // Crear una instancia de la ventana CRUDUsuarios
+            // Crear una instancia de la ventana CRUDMiembros
             CRUDMiembros ventana = new CRUDMiembros();
 
             // Configurar la ventana para mostrar la información del usuario consultado
@@ -169,6 +169,28 @@ namespace WPF_GymProManager.Views
 
             // Deshabilitar todos los controles de edición en la ventana
             EnableEditControls(ventana);
+
+            // Mostrar la ventana en el Frame
+            FrameUsuarios.Content = ventana;
+        }
+
+        private void Eliminar(object sender, RoutedEventArgs e)
+        {
+            // Obtener el ID del usuario que se desea consultar desde el botón
+            int id = (int)((Button)sender).CommandParameter;
+
+            // Crear una instancia de la ventana CRUDMiembros
+            CRUDMiembros ventana = new CRUDMiembros();
+
+            // Configurar la ventana para mostrar la información del usuario consultado
+            ventana.IdCliente = id;
+            ventana.Eliminar(id);
+            ventana.Titulo.Text = "Eliminar Usuario";
+            ventana.btnEliminar.Visibility = Visibility.Visible;
+
+
+            // Deshabilitar todos los controles de edición en la ventana
+            DisableEditControls(ventana);
 
             // Mostrar la ventana en el Frame
             FrameUsuarios.Content = ventana;
