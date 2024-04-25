@@ -107,7 +107,7 @@ namespace WPF_GymProManager.Views
                     // Ejecutar la consulta y obtener el ID de la sucursal
                     int sucursalID = Convert.ToInt32(cmd.ExecuteScalar());
 
-                    // Insertar dirección del miembro
+                    // Insertar dirección del cliente
                     string insertDireccionQuery = "INSERT INTO tdireccionclientes (Numero, Calle, Colonia, CodigoPostal, Municipio, Estado) " +
                                                   "VALUES (@Numero, @Calle, @Colonia, @CodigoPostal, @Municipio, @Estado);";
                     MySqlCommand insertDireccionCmd = new MySqlCommand(insertDireccionQuery, connection);
@@ -120,39 +120,40 @@ namespace WPF_GymProManager.Views
                     insertDireccionCmd.ExecuteNonQuery();
 
                     // Obtener el ID de la dirección insertada
-                    long direccionMiembroId = insertDireccionCmd.LastInsertedId;
+                    long direccionClienteId = insertDireccionCmd.LastInsertedId;
 
-                    // Insertar datos del miembro
-                    string insertMiembroQuery = "INSERT INTO tdatosclientes (TDireccionClientesID, Nombre, ApellidoPaterno, ApellidoMaterno, Genero, FechaNacimiento, CorreoElectronico, Telefono) " +
+                    // Insertar datos del cliente
+                    string insertClienteQuery = "INSERT INTO tdatosclientes (TDireccionClientesID, Nombre, ApellidoPaterno, ApellidoMaterno, Genero, FechaNacimiento, CorreoElectronico, Telefono) " +
                                                 "VALUES (@DireccionClienteID, @Nombre, @ApellidoPaterno, @ApellidoMaterno, @Genero, @FechaNacimiento, @CorreoElectronico, @Telefono);";
-                    MySqlCommand insertMiembroCmd = new MySqlCommand(insertMiembroQuery, connection);
-                    insertMiembroCmd.Parameters.AddWithValue("@DireccionClienteID", direccionMiembroId);
-                    insertMiembroCmd.Parameters.AddWithValue("@Nombre", tbNombre.Text);
-                    insertMiembroCmd.Parameters.AddWithValue("@ApellidoPaterno", tbApellidoPaterno.Text);
-                    insertMiembroCmd.Parameters.AddWithValue("@ApellidoMaterno", tbApellidoMaterno.Text);
-                    insertMiembroCmd.Parameters.AddWithValue("@Genero", tbGenero.Text);
-                    insertMiembroCmd.Parameters.AddWithValue("@FechaNacimiento", dpFechaNacimiento.SelectedDate);
-                    insertMiembroCmd.Parameters.AddWithValue("@CorreoElectronico", tbEmail.Text);
-                    insertMiembroCmd.Parameters.AddWithValue("@Telefono", tbTelefono.Text);
-                    insertMiembroCmd.ExecuteNonQuery();
+                    MySqlCommand insertClienteCmd = new MySqlCommand(insertClienteQuery, connection);
+                    insertClienteCmd.Parameters.AddWithValue("@DireccionClienteID", direccionClienteId);
+                    insertClienteCmd.Parameters.AddWithValue("@Nombre", tbNombre.Text);
+                    insertClienteCmd.Parameters.AddWithValue("@ApellidoPaterno", tbApellidoPaterno.Text);
+                    insertClienteCmd.Parameters.AddWithValue("@ApellidoMaterno", tbApellidoMaterno.Text);
+                    insertClienteCmd.Parameters.AddWithValue("@Genero", tbGenero.Text);
+                    insertClienteCmd.Parameters.AddWithValue("@FechaNacimiento", dpFechaNacimiento.SelectedDate);
+                    insertClienteCmd.Parameters.AddWithValue("@CorreoElectronico", tbEmail.Text);
+                    insertClienteCmd.Parameters.AddWithValue("@Telefono", tbTelefono.Text);
+                    insertClienteCmd.ExecuteNonQuery();
 
-                    // Consulta para obtener el nombre de la membresía
-                    string membresiaQuery = "SELECT TipoMembresia FROM tmembresias WHERE ID = @MembresiaID";
+                    // Consultar el ID de membresía correspondiente al nombre ingresado por el usuario
+                    string nombreMembresia = tbMembresia.Text;
+                    string membresiaQuery = "SELECT ID FROM tmembresias WHERE TipoMembresia = @NombreMembresia";
                     MySqlCommand membresiaCmd = new MySqlCommand(membresiaQuery, connection);
-                    membresiaCmd.Parameters.AddWithValue("@MembresiaID", Convert.ToInt32(tbMembresia.Text)); // Ajustar según cómo se obtenga la membresía
-                    string nombreMembresia = membresiaCmd.ExecuteScalar().ToString();
+                    membresiaCmd.Parameters.AddWithValue("@NombreMembresia", nombreMembresia);
+                    int idMembresia = Convert.ToInt32(membresiaCmd.ExecuteScalar());
 
-                    // Insertar información del miembro
-                    string insertInfoMiembroQuery = "INSERT INTO tclientes (TSucursalID, TDatosClientesID, MembresiaID, NombreMembresia, FechaRegistro, Acceso) " +
-                                                     "VALUES (@SucursalID, @DatosMiembroID, @MembresiaID, @NombreMembresia, @FechaRegistro, @Acceso);";
-                    MySqlCommand insertInfoMiembroCmd = new MySqlCommand(insertInfoMiembroQuery, connection);
-                    insertInfoMiembroCmd.Parameters.AddWithValue("@SucursalID", sucursalID); // Añadir el ID de la sucursal
-                    insertInfoMiembroCmd.Parameters.AddWithValue("@DatosMiembroID", insertMiembroCmd.LastInsertedId);
-                    insertInfoMiembroCmd.Parameters.AddWithValue("@MembresiaID", Convert.ToInt32(tbMembresia.Text)); // Ajustar según cómo se obtenga la membresía
-                    insertInfoMiembroCmd.Parameters.AddWithValue("@NombreMembresia", nombreMembresia);
-                    insertInfoMiembroCmd.Parameters.AddWithValue("@FechaRegistro", dpFechaRegistro.SelectedDate);
-                    insertInfoMiembroCmd.Parameters.AddWithValue("@Acceso", tbCodigoAcceso.Text);
-                    insertInfoMiembroCmd.ExecuteNonQuery();
+                    // Insertar información del cliente
+                    string insertInfoClienteQuery = "INSERT INTO tclientes (TSucursalID, TDatosClientesID, MembresiaID, FechaRegistro, Acceso) " +
+                                                     "VALUES (@SucursalID, @DatosClienteID, @MembresiaID, @FechaRegistro, @Acceso);";
+                    MySqlCommand insertInfoClienteCmd = new MySqlCommand(insertInfoClienteQuery, connection);
+                    insertInfoClienteCmd.Parameters.AddWithValue("@SucursalID", sucursalID); // Ajustar el ID de sucursal según corresponda
+                    insertInfoClienteCmd.Parameters.AddWithValue("@DatosClienteID", insertClienteCmd.LastInsertedId);
+                    insertInfoClienteCmd.Parameters.AddWithValue("@MembresiaID", idMembresia);
+                    insertInfoClienteCmd.Parameters.AddWithValue("@FechaRegistro", DateTime.Now); // Fecha actual
+                    insertInfoClienteCmd.Parameters.AddWithValue("@Acceso", tbCodigoAcceso.Text);
+                    insertInfoClienteCmd.ExecuteNonQuery();
+
 
                     MessageBox.Show("Miembro creado correctamente.");
                     Content = new Miembros();
@@ -179,40 +180,49 @@ namespace WPF_GymProManager.Views
                 {
                     connection.Open();
 
-                    string sqlQuery = @"SELECT 
-                                        tc.ID AS ClienteID,
-                                        tc.Nombre AS NombreCliente,
-                                        tc.ApellidoPaterno,
-                                        tc.ApellidoMaterno,
-                                        tc.Genero,
-                                        tc.FechaNacimiento,
-                                        tc.CorreoElectronico,
-                                        tc.Telefono,
-                                        tm.TipoMembresia AS Membresia,
-                                        tc.FechaRegistro,
-                                        tc.Acceso,
-                                        td.ID AS DireccionID,
-                                        td.Numero AS DireccionNumero,
-                                        td.Calle AS DireccionCalle,
-                                        td.Colonia AS DireccionColonia,
-                                        td.CodigoPostal AS DireccionCodigoPostal,
-                                        td.Municipio AS DireccionMunicipio,
-                                        td.Estado AS DireccionEstado
-                                    FROM 
-                                        tclientes tc
-                                    JOIN 
-                                        tdireccionclientes td ON tc.TDatosClientesID = td.ID
-                                    JOIN 
-                                        tmembresias tm ON tc.MembresiaID = tm.ID
-                                    WHERE 
-                                        tc.ID = @ClienteID;
-                                    ";
+                    string sqlQuery = @"
+SELECT 
+    m.ID AS ID_Cliente,
+    m.TSucursalID,
+    m.TDatosClientesID,
+    m.MembresiaID,
+    m.FechaRegistro,
+    m.Acceso,
+    dm.Nombre AS Nombre,
+    dm.ApellidoPaterno AS Apellido,
+    dm.ApellidoMaterno AS ApellidoMaterno,
+    dm.Genero AS Genero,
+    dm.FechaNacimiento AS FechaNacimiento,
+    dm.CorreoElectronico AS Email,
+    dm.Telefono AS Telefono,
+    dc.ID AS DireccionID,
+    dc.Numero AS DireccionNumero,
+    dc.Calle AS DireccionCalle,
+    dc.Colonia AS DireccionColonia,
+    dc.CodigoPostal AS DireccionCodigoPostal,
+    dc.Municipio AS DireccionMunicipio,
+    dc.Estado AS DireccionEstado,
+    mb.ID AS MembresiaID,
+    mb.TipoMembresia AS Tipo_Membresia
+FROM 
+    tclientes m
+JOIN 
+    tdatosclientes dm ON m.TDatosClientesID = dm.ID
+JOIN 
+    tdireccionclientes dc ON dm.TDireccionClientesID = dc.ID
+JOIN 
+    tmembresias mb ON m.MembresiaID = mb.ID
+WHERE 
+    m.ID = @ClienteID;";
+
+
 
                     MySqlCommand com = new MySqlCommand(sqlQuery, connection);
                     com.Parameters.AddWithValue("@ClienteID", clienteID);
 
                     using (MySqlDataReader reader = com.ExecuteReader())
                     {
+
                         if (reader.Read())
                         {
                             // Mostrar datos en los cuadros de texto
@@ -222,14 +232,14 @@ namespace WPF_GymProManager.Views
                             this.tbColonia.Text = reader["DireccionColonia"].ToString();
                             this.tbMunicipio.Text = reader["DireccionMunicipio"].ToString();
                             this.tbEstado.Text = reader["DireccionEstado"].ToString();
-                            this.tbNombre.Text = reader["NombreCliente"].ToString();
-                            this.tbApellidoPaterno.Text = reader["ApellidoPaterno"].ToString();
+                            this.tbNombre.Text = reader["Nombre"].ToString();
+                            this.tbApellidoPaterno.Text = reader["Apellido"].ToString();
                             this.tbApellidoMaterno.Text = reader["ApellidoMaterno"].ToString();
                             this.tbGenero.Text = reader["Genero"].ToString();
                             this.dpFechaNacimiento.SelectedDate = Convert.ToDateTime(reader["FechaNacimiento"]);
-                            this.tbEmail.Text = reader["CorreoElectronico"].ToString();
+                            this.tbEmail.Text = reader["Email"].ToString();
                             this.tbTelefono.Text = reader["Telefono"].ToString();
-                            this.tbMembresia.Text = reader["Membresia"].ToString();
+                            this.tbMembresia.Text = reader["Tipo_Membresia"].ToString();
                             this.dpFechaRegistro.SelectedDate = Convert.ToDateTime(reader["FechaRegistro"]);
                             this.tbCodigoAcceso.Text = reader["Acceso"].ToString();
                         }
