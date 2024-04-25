@@ -338,7 +338,7 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}"/>
+                                                Style="{DynamicResource ButtonStyle}" CommandParameter="{Binding ID_Cliente}"  Click="Actualizar"/>
                                         <Button Name="btnEliminar" 
                                                 Content="Eliminar"
                                                 Background="#CFD8DC"

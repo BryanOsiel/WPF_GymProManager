@@ -118,7 +118,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Login.xaml.cs">
+    <Compile Include="Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\CRUDMiembros.xaml.cs">
@@ -133,7 +133,7 @@
     <Compile Include="Views\Usuarios.xaml.cs">
       <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
-    <Page Include="Login.xaml">
+    <Page Include="Views\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

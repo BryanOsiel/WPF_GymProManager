@@ -161,7 +161,7 @@ namespace WPF_GymProManager.Views
             #endregion
         
         public int IdUsuario;
-        private Button sender;
+        //private Button sender;
         #region Leer
         public void Consultar(int empleadoID)
         {

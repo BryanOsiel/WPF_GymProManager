@@ -151,5 +151,27 @@ namespace WPF_GymProManager.Views
             // Mostrar la ventana en el Frame
             FrameUsuarios.Content = ventana;
         }
+
+        private void Actualizar(object sender, RoutedEventArgs e)
+        {
+            // Obtener el ID del usuario que se desea consultar desde el botón
+            int id = (int)((Button)sender).CommandParameter;
+
+            // Crear una instancia de la ventana CRUDUsuarios
+            CRUDMiembros ventana = new CRUDMiembros();
+
+            // Configurar la ventana para mostrar la información del usuario consultado
+            ventana.IdCliente = id;
+            ventana.Editar(id);
+            ventana.Titulo.Text = "Editar Usuario";
+            ventana.btnActualizar.Visibility = Visibility.Visible;
+
+
+            // Deshabilitar todos los controles de edición en la ventana
+            EnableEditControls(ventana);
+
+            // Mostrar la ventana en el Frame
+            FrameUsuarios.Content = ventana;
+        }
     }
 }
