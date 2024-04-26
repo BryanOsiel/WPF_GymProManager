@@ -183,6 +183,7 @@
                     <DatePicker Grid.Row="2" Grid.Column="1" x:Name="dpFechaRegistro" Width="200" Margin="5"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Código de Acceso:" Margin="5"/>
                     <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbCodigoAcceso" Width="200" Margin="5"/>
+                    <Button x:Name="btnGenerarCodigoAcceso" Grid.Row="4" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Margin="262,5,0,5" Width="22" Grid.Column="1" Click="btnGenerarCodigo_Click" Visibility="Hidden"/>
                 </Grid>
 
                 <!-- Contraseña -->

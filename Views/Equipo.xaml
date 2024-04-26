@@ -1,5 +1,5 @@
-﻿<UserControl x:Class="WPF_GymProManager.Views.Miembros"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="WPF_GymProManager.Views.Equipo"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -198,6 +198,7 @@
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
+
         <Style TargetType="{x:Type DataGridCell}">
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
@@ -242,16 +243,17 @@
                 </Grid.RowDefinitions>
                 <!--#region Titulo-->
                 <TextBlock
-                    Text="Miembros"
+                    Grid.ColumnSpan="3"
+                    Text="Detalles del Equipo"
                     Foreground="#455A64"
                     FontSize="30"
                     FontFamily="Monserrat"
-                    HorizontalAlignment="Center" Grid.Column="3" Height="36" Width="139" Margin="0,7,0,7"/>
+                    HorizontalAlignment="Center" Grid.Column="2" Height="36" Width="279" Margin="0,7,0,7"/>
                 <!--#endregion-->
                 <!--#region Buscador-->
                 <TextBlock Grid.Row="1"
                     Grid.Column="1"
-                    Text="Buscar Miembro:"
+                    Text="Buscar Equipo:"
                     HorizontalAlignment="Left"
                     FontSize="20"
                     FontFamily="Monserrat"
@@ -286,7 +288,7 @@
                     Width="100"
                     HorizontalAlignment="Left" Style="{DynamicResource ButtonStyle}" 
                     Grid.Row="1"
-                    Click="AgregarMiembro">
+                    Click="Agregar">
                     <TextBlock Text="Agregar"
                         Foreground="White"
                         FontSize="15"
@@ -313,7 +315,7 @@
                     HorizontalGridLinesBrush="Transparent">
                     <DataGrid.Columns>
                         <DataGridTemplateColumn Header="Opciones de Administrador"
-                            Width="225">
+                            Width="240">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <DockPanel>
@@ -326,8 +328,9 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}"
-                                                CommandParameter="{Binding ID_Cliente}" Click="Consultar"/>
+                                                Style="{DynamicResource ButtonStyle}" 
+                                                Click="Consultar"
+                                                CommandParameter="{Binding ID_Equipo}"/>
                                         <Button Name="btnEditar" 
                                                 Content="Editar"
                                                 Background="#CFD8DC"
@@ -337,7 +340,9 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}" CommandParameter="{Binding ID_Cliente}"  Click="Actualizar"/>
+                                                Style="{DynamicResource ButtonStyle}"
+                                                Click="Actualizar"
+                                                CommandParameter="{Binding ID_Equipo}"/>
                                         <Button Name="btnEliminar" 
                                                 Content="Eliminar"
                                                 Background="#CFD8DC"
@@ -347,17 +352,18 @@
                                                 VerticalAlignment="Center"
                                                 HorizontalAlignment="Center"
                                                 Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}" CommandParameter="{Binding ID_Cliente}"  Click="Eliminar"/>
+                                                Style="{DynamicResource ButtonStyle}" Click="Eliminar"
+                                                CommandParameter="{Binding ID_Equipo}"/>
                                     </DockPanel>
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="ID" Width="100" Binding="{Binding ID_Cliente}"/>
-                        <DataGridTextColumn Header="Nombre" Width="*" Binding="{Binding Nombre}"/>
-                        <DataGridTextColumn Header="Apellido" Width="*" Binding="{Binding Apellido}"/>
-                        <DataGridTextColumn Header="Email" Width="*" Binding="{Binding Email}"/>
-                        <DataGridTextColumn Header="Telefono" Width="*" Binding="{Binding Telefono}"/>
-                        <DataGridTextColumn Header="Tipo de Membresía" Width="*" Binding="{Binding Tipo_Membresia}"/>
+                        <DataGridTextColumn Header="ID"
+                            Width="120" Binding="{Binding ID_Equipo}"/>
+                        <DataGridTextColumn Header="Nombre"
+                            Width="*" Binding="{Binding NombreEquipo}"/>
+                        <DataGridTextColumn Header="Cantidad"
+                            Width="120" Binding="{Binding Cantidad}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--#endregion-->

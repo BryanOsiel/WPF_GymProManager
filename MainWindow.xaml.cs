@@ -72,5 +72,15 @@ namespace WPF_GymProManager
         {
             MessageBox.Show("Programa desarrollado para la materia de Ingeniería de Software por Juan Amaral, Osiel Casas, José Flores y Mildred Ruiz.", "Acerca de nosotros");
         }
+
+        private void Equipo_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new Equipo();
+        }
+
+        private void Inicio_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

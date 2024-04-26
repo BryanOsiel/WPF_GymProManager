@@ -1,6 +1,7 @@
 ﻿using MySql.Data.MySqlClient;
 using MySqlX.XDevAPI.Common;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -656,5 +657,73 @@ namespace WPF_GymProManager.Views
             }
         }
 
+        private List<string> ObtenerCodigosAcceso()
+        {
+            List<string> codigosAcceso = new List<string>();
+
+            try
+            {
+                // Obtener la cadena de conexión desde App.config
+                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+                // Consulta SQL para obtener todos los códigos de acceso
+                string query = "SELECT Acceso FROM tclientes";
+
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    connection.Open();
+
+                    MySqlCommand command = new MySqlCommand(query, connection);
+                    using (MySqlDataReader reader = command.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            codigosAcceso.Add(reader["Acceso"].ToString());
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al obtener los códigos de acceso: " + ex.Message);
+            }
+
+            return codigosAcceso;
+        }
+
+        private string GenerarCodigoAccesoAleatorio(List<string> codigosAcceso)
+        {
+            Random random = new Random();
+
+            // Generar un código aleatorio de 5 cifras
+            string codigoAcceso = random.Next(10000, 99999).ToString();
+
+            // Verificar que el código generado no esté en la lista de códigos existentes
+            while (codigosAcceso.Contains(codigoAcceso))
+            {
+                codigoAcceso = random.Next(10000, 99999).ToString();
+            }
+
+            return codigoAcceso;
+        }
+
+        private void btnGenerarCodigo_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                // Obtener todos los códigos de acceso existentes en la base de datos
+                List<string> codigosAcceso = ObtenerCodigosAcceso();
+
+                // Generar un nuevo código de acceso aleatorio que no exista en la base de datos
+                string nuevoCodigoAcceso = GenerarCodigoAccesoAleatorio(codigosAcceso);
+
+                // Mostrar el nuevo código de acceso generado en un MessageBox o en algún otro control de la interfaz
+                tbCodigoAcceso.Text = nuevoCodigoAcceso;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al generar el código de acceso: " + ex.Message);
+            }
+        }
     }
 }

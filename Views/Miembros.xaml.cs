@@ -28,11 +28,7 @@ namespace WPF_GymProManager.Views
             InitializeComponent();
             CargarDatos();
         }
-        private void Agregar(object sender, RoutedEventArgs e)
-        {
-            CRUDMiembros ventana = new CRUDMiembros();
-            FrameUsuarios.Content = ventana;
-        }
+
 
         void CargarDatos()
         {
@@ -85,6 +81,8 @@ namespace WPF_GymProManager.Views
             CRUDMiembros ventana = new CRUDMiembros();
             FrameUsuarios.Content = ventana;
             ventana.btnCrear.Visibility = Visibility.Visible;
+            ventana.btnGenerarCodigoAcceso.Visibility = Visibility.Visible;
+            ventana.tbCodigoAcceso.IsEnabled = false;
         }
 
 
@@ -127,7 +125,7 @@ namespace WPF_GymProManager.Views
             ventana.tbEmail.IsEnabled = true;
             ventana.tbTelefono.IsEnabled = true;
             ventana.dpFechaRegistro.IsEnabled = true;
-            ventana.tbCodigoAcceso.IsEnabled = true;
+            ventana.tbCodigoAcceso.IsEnabled = false;
             ventana.tbMembresia.IsEnabled = true;
 
         }

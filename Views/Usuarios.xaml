@@ -113,7 +113,7 @@
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="*"/>
+                                                <RowDefinition Height="*" />
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Button Command="{x:Static DataGrid.SelectAllCommand}" Focusable="false" Style="{DynamicResource {ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.All}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
@@ -156,6 +156,7 @@
         <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
         <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+        
         <!--#region TextBoxStyle-->
         <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
@@ -203,12 +204,13 @@
                 <Trigger Property="IsSelected" Value="True">
                     <Setter Property="Background" Value="#90A4AE"/>
                     <Setter Property="BorderBrush" Value="Transparent"/>
-                </Trigger><Trigger Property="IsMouseOver" Value="True">
+                </Trigger>
+                <Trigger Property="IsMouseOver" Value="True">
                     <Setter Property="Background" Value="#90A4AE"/>
                     <Setter Property="BorderBrush" Value="Transparent"/>
                     <Setter Property="Foreground" Value="White"/>
                 </Trigger>
-            </Style.Triggers>              
+            </Style.Triggers>
         </Style>
         <!--#endregion-->
     </UserControl.Resources>
@@ -241,12 +243,11 @@
                 </Grid.RowDefinitions>
                 <!--#region Titulo-->
                 <TextBlock
-                    Grid.ColumnSpan="3"
-                    Text="Mantenimiento"
+                    Text="Usuarios"
                     Foreground="#455A64"
                     FontSize="30"
                     FontFamily="Monserrat"
-                    HorizontalAlignment="Center" Grid.Column="2" Height="36" Width="209"/>
+                    HorizontalAlignment="Left" Grid.Column="3" Height="36" Width="119" Margin="79,7,0,7"/>
                 <!--#endregion-->
                 <!--#region Buscador-->
                 <TextBlock Grid.Row="1"
@@ -357,7 +358,7 @@
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
                         <DataGridTextColumn Header="ID"
-                            Width="100" Binding="{Binding ID_Empleado}"/>
+                            Width="120" Binding="{Binding ID_Empleado}"/>
                         <DataGridTextColumn Header="Nombre"
                             Width="*" Binding="{Binding Nombre}"/>
                         <DataGridTextColumn Header="Apellido"

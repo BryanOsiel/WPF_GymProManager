@@ -1,27 +1,32 @@
 ﻿using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Configuration;
-using System.Windows.Forms;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using Button = System.Windows.Controls.Button;
 
 namespace WPF_GymProManager.Views
 {
     /// <summary>
-    /// Lógica de interacción para Usuarios.xaml
+    /// Lógica de interacción para Equipo.xaml
     /// </summary>
-    public partial class Usuarios : System.Windows.Controls.UserControl
+    public partial class Equipo : System.Windows.Controls.UserControl
     {
-        public Usuarios()
+        public Equipo()
         {
             InitializeComponent();
             CargarDatos();
-            
         }
 
         void CargarDatos()
@@ -38,7 +43,7 @@ namespace WPF_GymProManager.Views
                     connection.Open();
 
                     // Definir la consulta SQL
-                    string query = "SELECT e.ID AS ID_Empleado, d.Nombre AS Nombre, d.ApellidoPaterno AS Apellido, d.CorreoElectronico AS Email, d.Telefono AS Telefono, e.Puesto AS Puesto FROM templeados e JOIN tdatosempleados d ON e.TDatosEmpleadosID = d.ID JOIN tdireccionempleados de ON d.TDireccionEmpleadosID = de.ID;";
+                    string query = "SELECT ID AS ID_Equipo, NombreEquipo, Cantidad, Descripcion, Estado, Marca FROM tequipos;";
 
                     // Crear un comando MySQL para ejecutar la consulta
                     MySqlCommand command = new MySqlCommand(query, connection);
@@ -46,10 +51,10 @@ namespace WPF_GymProManager.Views
                     // Crear un adaptador de datos MySQL para ejecutar el comando y llenar un DataSet
                     MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                     System.Data.DataSet dataSet = new System.Data.DataSet();
-                    adapter.Fill(dataSet, "Usuarios");
+                    adapter.Fill(dataSet, "Equipo");
 
                     // Asignar el DataSet como origen de datos del control (por ejemplo, un DataGrid)
-                    GridDatos.ItemsSource = dataSet.Tables["Usuarios"].DefaultView;
+                    GridDatos.ItemsSource = dataSet.Tables["Equipo"].DefaultView;
                     connection.Close();
                 }
                 catch (Exception ex)
@@ -59,14 +64,11 @@ namespace WPF_GymProManager.Views
             }
         }
 
-
         private void Agregar(object sender, RoutedEventArgs e)
         {
-            CRUDUsuarios ventana = new CRUDUsuarios();
+            CRUDEquipo ventana = new CRUDEquipo();
             FrameUsuarios.Content = ventana;
             ventana.btnCrear.Visibility = Visibility.Visible;
-            ventana.btnGenerarCodigoAcceso.Visibility = Visibility.Visible;
-            ventana.tbCodigoAcceso.IsEnabled = false;
         }
 
         private void Consultar(object sender, RoutedEventArgs e)
@@ -75,12 +77,12 @@ namespace WPF_GymProManager.Views
             int id = (int)((Button)sender).CommandParameter;
 
             // Crear una instancia de la ventana CRUDUsuarios
-            CRUDUsuarios ventana = new CRUDUsuarios();
+            CRUDEquipo ventana = new CRUDEquipo();
 
             // Configurar la ventana para mostrar la información del usuario consultado
-            ventana.IdUsuario = id;
+            ventana.IdEquipo = id;
             ventana.Consultar(id);
-            ventana.Titulo.Text = "Consultar Usuario";
+            ventana.Titulo.Text = "Consultar Equipo";
 
             // Deshabilitar todos los controles de edición en la ventana
             DisableEditControls(ventana);
@@ -89,58 +91,25 @@ namespace WPF_GymProManager.Views
             FrameUsuarios.Content = ventana;
         }
 
-        // Método para deshabilitar los controles de edición en la ventana
-        private void DisableEditControls(CRUDUsuarios ventana)
+        private void DisableEditControls(CRUDEquipo ventana)
         {
             // Deshabilitar todos los controles de edición en la ventana
-            ventana.tbCalle.IsEnabled = false;
-            ventana.tbNumero.IsEnabled = false;
-            ventana.tbColonia.IsEnabled = false;
-            ventana.tbCodigoPostal.IsEnabled = false;
-            ventana.tbMunicipio.IsEnabled = false;
+            ventana.tbNombreEquipo.IsEnabled = false;
+            ventana.tbCantidad.IsEnabled = false;
+            ventana.tbDescripcion.IsEnabled = false;
             ventana.tbEstado.IsEnabled = false;
-            ventana.tbNombre.IsEnabled = false;
-            ventana.tbApellidoPaterno.IsEnabled = false;
-            ventana.tbApellidoMaterno.IsEnabled = false;
-            ventana.tbGenero.IsEnabled = false;
-            ventana.dpFechaNacimiento.IsEnabled = false;
-            ventana.tbEmail.IsEnabled = false;
-            ventana.tbTelefono.IsEnabled = false;
-            ventana.tbTurno.IsEnabled = false;
-            ventana.dpFechaContratacion.IsEnabled = false;
-            ventana.tbSalario.IsEnabled = false;
-            ventana.tbCodigoAcceso.IsEnabled = false;
-            ventana.tbPuesto.IsEnabled = false;
-            ventana.tbContraseña.IsEnabled = false;
-            
-        }
+            ventana.tbMarca.IsEnabled = false;
 
-        private void EnableEditControls(CRUDUsuarios ventana)
+        }
+        
+        private void EnableEditControls(CRUDEquipo ventana)
         {
             // Deshabilitar todos los controles de edición en la ventana
-            ventana.tbCalle.IsEnabled = true;
-            ventana.tbNumero.IsEnabled = true;
-            ventana.tbColonia.IsEnabled = true;
-            ventana.tbCodigoPostal.IsEnabled = true;
-            ventana.tbMunicipio.IsEnabled = true;
+            ventana.tbNombreEquipo.IsEnabled = true;
+            ventana.tbCantidad.IsEnabled = true;
+            ventana.tbDescripcion.IsEnabled = true;
             ventana.tbEstado.IsEnabled = true;
-            ventana.tbNombre.IsEnabled = true;
-            ventana.tbApellidoPaterno.IsEnabled = true;
-            ventana.tbApellidoMaterno.IsEnabled = true;
-            ventana.tbGenero.IsEnabled = true;
-            ventana.dpFechaNacimiento.IsEnabled = true;
-            ventana.tbEmail.IsEnabled = true;
-            ventana.tbTelefono.IsEnabled = true;
-            ventana.tbTurno.IsEnabled = true;
-            ventana.dpFechaContratacion.IsEnabled = true;
-            ventana.tbSalario.IsEnabled = true;
-            ventana.tbCodigoAcceso.IsEnabled = false;
-            ventana.tbPuesto.IsEnabled = true;
-            ventana.tbContraseña.IsEnabled = true;
-
-        }
-        private void Buscar_Click(object sender, RoutedEventArgs e)
-        {
+            ventana.tbMarca.IsEnabled = true;
 
         }
 
@@ -150,12 +119,12 @@ namespace WPF_GymProManager.Views
             int id = (int)((Button)sender).CommandParameter;
 
             // Crear una instancia de la ventana CRUDUsuarios
-            CRUDUsuarios ventana = new CRUDUsuarios();
+            CRUDEquipo ventana = new CRUDEquipo();
 
             // Configurar la ventana para mostrar la información del usuario consultado
-            ventana.IdUsuario = id;
+            ventana.IdEquipo = id;
             ventana.Editar(id);
-            ventana.Titulo.Text = "Editar Usuario";
+            ventana.Titulo.Text = "Editar Equipo";
             ventana.btnActualizar.Visibility = Visibility.Visible;
 
 
@@ -172,13 +141,13 @@ namespace WPF_GymProManager.Views
             int id = (int)((Button)sender).CommandParameter;
 
             // Crear una instancia de la ventana CRUDUsuarios
-            CRUDUsuarios ventana = new CRUDUsuarios();
+            CRUDEquipo ventana = new CRUDEquipo();
 
             // Configurar la ventana para mostrar la información del usuario consultado
-            ventana.IdUsuario = id;
+            ventana.IdEquipo = id;
             ventana.Eliminar(id);
-            ventana.Titulo.Text = "Eliminar Usuario";
-            ventana.btnElinimar.Visibility = Visibility.Visible;
+            ventana.Titulo.Text = "Eliminar Equipo";
+            ventana.btnEliminar.Visibility = Visibility.Visible;
 
 
             // Deshabilitar todos los controles de edición en la ventana
@@ -188,5 +157,4 @@ namespace WPF_GymProManager.Views
             FrameUsuarios.Content = ventana;
         }
     }
-
 }

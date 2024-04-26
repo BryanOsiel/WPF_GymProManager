@@ -468,7 +468,7 @@
                                     HorizontalAlignment="Left"
                                     Cursor="Hand"
                                     Background="Transparent"
-                                    BorderBrush="Transparent">
+                                    BorderBrush="Transparent" Click="Inicio_Click">
                                 <Grid Width="200">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="60"/>
@@ -566,7 +566,7 @@
                                     HorizontalAlignment="Left"
                                     Cursor="Hand"
                                     Background="Transparent"
-                                    BorderBrush="Transparent">
+                                    BorderBrush="Transparent" Click="Equipo_Click" >
                                 <Grid Width="200">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="60"/>
@@ -590,7 +590,7 @@
                             </Button>
                         </ListViewItem>
                         <!--#endregion-->
-                        <!-- #region Equipo -->
+                        <!-- #region Asistencia -->
                         <ListViewItem Style="{DynamicResource ListViewStyle}" Height="70">
                             <Button Style="{DynamicResource BtnListaStyle}" x:Name="btnAsistencia"
                                     Height="60"
