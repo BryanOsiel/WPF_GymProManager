@@ -24,6 +24,7 @@ namespace WPF_GymProManager
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new Dashboard();
         }
 
         private void TBShow(object sender, RoutedEventArgs e)
@@ -80,7 +81,12 @@ namespace WPF_GymProManager
 
         private void Inicio_Click(object sender, RoutedEventArgs e)
         {
+            DataContext = new Dashboard();
+        }
 
+        private void btnAsistencia_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new Asistencia();
         }
     }
 }

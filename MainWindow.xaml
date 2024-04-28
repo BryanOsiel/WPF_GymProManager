@@ -381,7 +381,7 @@
                   PreviewMouseLeftButtonDown="PreviewMouseLeftButtonDownBG">
                 <Border CornerRadius="0,0,10,10"
                         Background="#CFD8DC" Margin="0,10,0,0"/>
-                <TextBlock Text="Bienvenido"
+                <TextBlock
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                FontSize="50"/>
@@ -407,9 +407,8 @@
 
                     <!-- #region ShowHideMenu -->
                     <Grid Background="Transparent"
-                          VerticalAlignment="Top"
                           HorizontalAlignment="left"
-                          Margin="10">
+                          Margin="15,10,0,0">
                         <ToggleButton Style="{DynamicResource BtnShowHide}" x:Name="btnShowHide"
                                       Width="30"
                                       Height="30"
@@ -598,7 +597,7 @@
                                     HorizontalAlignment="Left"
                                     Cursor="Hand"
                                     Background="Transparent"
-                                    BorderBrush="Transparent">
+                                    BorderBrush="Transparent" Click="btnAsistencia_Click">
                                 <Grid Width="200">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="60"/>

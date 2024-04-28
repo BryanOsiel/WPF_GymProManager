@@ -1,5 +1,5 @@
-﻿<UserControl x:Class="WPF_GymProManager.Views.Usuarios"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="WPF_GymProManager.Views.Asistencia"
+              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -113,7 +113,7 @@
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*"/>
                                                 <RowDefinition Height="Auto"/>
                                             </Grid.RowDefinitions>
                                             <Button Command="{x:Static DataGrid.SelectAllCommand}" Focusable="false" Style="{DynamicResource {ComponentResourceKey ResourceId=DataGridSelectAllButtonStyle, TypeInTargetAssembly={x:Type DataGrid}}}" Visibility="{Binding HeadersVisibility, ConverterParameter={x:Static DataGridHeadersVisibility.All}, Converter={x:Static DataGrid.HeadersVisibilityConverter}, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" Width="{Binding CellsPanelHorizontalOffset, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}"/>
@@ -156,7 +156,6 @@
         <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
         <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
-
         <!--#region TextBoxStyle-->
         <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
@@ -199,6 +198,7 @@
                 </MultiTrigger>
             </Style.Triggers>
         </Style>
+
         <Style TargetType="{x:Type DataGridCell}">
             <Style.Triggers>
                 <Trigger Property="IsSelected" Value="True">
@@ -243,52 +243,40 @@
                 </Grid.RowDefinitions>
                 <!--#region Titulo-->
                 <TextBlock
-                    Text="Usuarios"
+                    Grid.ColumnSpan="3"
+                    Text="Asistencia"
                     Foreground="#455A64"
                     FontSize="30"
                     FontFamily="Monserrat"
-                    HorizontalAlignment="Center" Grid.Column="3" Height="36" Width="119" Margin="0,7,0,7"/>
+                    HorizontalAlignment="Center" Grid.Column="2" Height="36" Width="147" Margin="0,7,0,7"/>
                 <!--#endregion-->
                 <!--#region Buscador-->
                 <TextBlock Grid.Row="1"
                     Grid.Column="1"
-                    Text="Buscar Usuario:"
+                    Text="Registar asistencia:"
                     HorizontalAlignment="Left"
                     FontSize="20"
                     FontFamily="Monserrat"
                     Foreground="#455A64"
-                    Margin="144,6,0,6" Height="18" Width="146"/>
+                    Margin="125,6,0,6" Height="18" Width="165"/>
                 <!--TextBox-->
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextAlignment="Center"
+                <TextBox x:Name="CodigoAccesoTextBox" Style="{DynamicResource TextBoxStyle}" TextAlignment="Center"
                     Background="GhostWhite"
                     Grid.Column="2"
                     Grid.Row="1"
                     FontSize="20"
                     FontFamily="Monserrat" Grid.ColumnSpan="2"/>
                 <!--Boton Buscar-->
-                <Button Style="{DynamicResource ButtonStyle}" x:Name="btnBuscar"
+                <!--Boton Registrar-->
+                <Button x:Name="btnRegistrar"
                     Grid.Column="4"
-                    Grid.Row="1"
                     Background="#455A64"
                     Cursor="Hand"
                     Width="100"
-                    HorizontalAlignment="Center">
-                    <TextBlock Text="Buscar"
-                        Foreground="White"
-                        FontSize="15"
-                        FontFamily="Montserrat"/>
-                </Button>
-                <!--Boton Agregar-->
-                <Button x:Name="btnAgregar"
-                    Grid.Column="5"
-                    Background="#455A64"
-                    Margin="50,0,0,0"
-                    Cursor="Hand"
-                    Width="100"
-                    HorizontalAlignment="Left" Style="{DynamicResource ButtonStyle}" 
+                    HorizontalAlignment="Center" Style="{DynamicResource ButtonStyle}" 
                     Grid.Row="1"
-                    Click="Agregar">
-                    <TextBlock Text="Agregar"
+                    Click="Registrar">
+                    <TextBlock Text="Registrar"
                         Foreground="White"
                         FontSize="15"
                         FontFamily="Montserrat"/>
@@ -313,62 +301,14 @@
                     GridLinesVisibility="Horizontal"
                     HorizontalGridLinesBrush="Transparent">
                     <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Opciones de Administrador"
-                            Width="225">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <DockPanel>
-                                        <Button Name="btnConsultar" 
-                                                Content="Consultar"
-                                                Background="#CFD8DC"
-                                                Width="80"
-                                                BorderBrush="Transparent"
-                                                FontSize="10"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}" 
-                                                Click="Consultar"
-                                                CommandParameter="{Binding ID_Empleado}"/>
-                                        <Button Name="btnEditar" 
-                                                Content="Editar"
-                                                Background="#CFD8DC"
-                                                Width="80"
-                                                BorderBrush="Transparent"
-                                                FontSize="10"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}"
-                                                Click="Actualizar"
-                                                CommandParameter="{Binding ID_Empleado}"/>
-                                        <Button Name="btnEliminar" 
-                                                Content="Eliminar"
-                                                Background="#CFD8DC"
-                                                Width="80"
-                                                BorderBrush="Transparent"
-                                                FontSize="10"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}" Click="Eliminar"
-                                                CommandParameter="{Binding ID_Empleado}"/>
-                                    </DockPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="ID"
-                            Width="120" Binding="{Binding ID_Empleado}"/>
                         <DataGridTextColumn Header="Nombre"
-                            Width="*" Binding="{Binding Nombre}"/>
+                            Width="200" Binding="{Binding Nombre}"/>
                         <DataGridTextColumn Header="Apellido"
                             Width="*" Binding="{Binding Apellido}"/>
-                        <DataGridTextColumn Header="Email"
-                            Width="*" Binding="{Binding Email}"/>
-                        <DataGridTextColumn Header="Telefono"
-                            Width="*" Binding="{Binding Telefono}"/>
-                        <DataGridTextColumn Header="Puesto"
-                            Width="*" Binding="{Binding Puesto}"/>
+                        <DataGridTextColumn Header="Membresia"
+                            Width="*" Binding="{Binding TipoMembresia}"/>
+                        <DataGridTextColumn Header="Fecha y Hora"
+                            Width="250" Binding="{Binding FechaHoraAsistencia}"/>
                     </DataGrid.Columns>
                 </DataGrid>
                 <!--#endregion-->

@@ -224,7 +224,7 @@
                     <ColumnDefinition Width="221*"/>
                     <ColumnDefinition Width="119*"/>
                     <ColumnDefinition Width="154*"/>
-                    <ColumnDefinition Width="170*"/>
+                    <ColumnDefinition Width="119*"/>
                     <ColumnDefinition Width="221*"/>
 
                     <ColumnDefinition Width="20"/>

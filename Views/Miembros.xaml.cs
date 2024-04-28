@@ -161,7 +161,7 @@ namespace WPF_GymProManager.Views
             // Configurar la ventana para mostrar la información del usuario consultado
             ventana.IdCliente = id;
             ventana.Editar(id);
-            ventana.Titulo.Text = "Editar Usuario";
+            ventana.Titulo.Text = "Editar Miembro";
             ventana.btnActualizar.Visibility = Visibility.Visible;
 
 
@@ -183,7 +183,7 @@ namespace WPF_GymProManager.Views
             // Configurar la ventana para mostrar la información del usuario consultado
             ventana.IdCliente = id;
             ventana.Eliminar(id);
-            ventana.Titulo.Text = "Eliminar Usuario";
+            ventana.Titulo.Text = "Eliminar Miembro";
             ventana.btnEliminar.Visibility = Visibility.Visible;
 
 
