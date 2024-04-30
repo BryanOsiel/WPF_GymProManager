@@ -7,11 +7,11 @@
         xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp" 
         xmlns:viewmodels="clr-namespace:WPF_GymProManager.Views"
         mc:Ignorable="d"
-        Title="Inicio" Height="700" Width="1300"
+        Title="Inicio - GYMPROMANAGER" Height="700" Width="1300"
         WindowStyle="None"
         WindowStartupLocation="CenterScreen"
         Background="Transparent"
-        AllowsTransparency="True">
+        AllowsTransparency="True" Icon="/logo.png">
     <Window.Resources>
         <!--#REGION FOCUSVISUAL-->
         <Style x:Key="btnHeaderStyle" TargetType="{x:Type StackPanel}"/>
@@ -287,7 +287,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <fa:IconImage Icon="InfoCircle" Stretch="Uniform"                                      Foreground="White"/>
                                 <TextBlock Grid.Column="2"
-                                       Text="Acerca de"
+                                       Text="Información"
                                        HorizontalAlignment="Center"
                                        VerticalAlignment="Center"
                                        Margin="5,0,0,0"/>
@@ -309,14 +309,6 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="15*"/>
                             </Grid.ColumnDefinitions>
-                            <StackPanel Style="{DynamicResource btnHeaderStyle}" Orientation="Horizontal">
-                                <fa:IconImage Icon="UserAlt"                                      Foreground="White"/>
-                                <TextBlock Grid.Column="0"
-                                       Text= "Mi Cuenta"
-                                       HorizontalAlignment="Center"
-                                       VerticalAlignment="Center"
-                                       Margin="5,0,0,0"/>
-                            </StackPanel>
                         </Grid>
                     </Button>
                     <!--#endregion-->
@@ -617,6 +609,38 @@
                                                VerticalAlignment="Center"
                                                HorizontalAlignment="Center"
                                                Margin="0,0,15,0"/>
+                                </Grid>
+                            </Button>
+                        </ListViewItem>
+                        <!--#endregion-->
+                        <!-- #region Asistencia -->
+                        <ListViewItem Style="{DynamicResource ListViewStyle}" Height="70">
+                            <Button Style="{DynamicResource BtnListaStyle}" x:Name="btnVenta"
+                                   Height="60"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Cursor="Hand"
+                                   Background="Transparent"
+                                   BorderBrush="Transparent" Click="btnVenta_Click">
+                                <Grid Width="200">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <fa:IconImage Icon="cartshopping"
+                                                 Width="30"
+                                                 Foreground="White"
+                                                 Grid.Column="0"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,0,15,0"/>
+                                    <TextBlock Text="Venta"
+                                              Grid.Column="1"
+                                              FontWeight="SemiBold"
+                                              FontSize="20"
+                                              Foreground="White"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,15,0"/>
                                 </Grid>
                             </Button>
                         </ListViewItem>

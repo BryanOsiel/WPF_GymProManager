@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         Background="Transparent"
         AllowsTransparency="True"
-        Title="Login" Height="451" Width="543" ResizeMode="NoResize" WindowStyle="None">
+        Title="Login - GYMPROMANAGER" Height="451" Width="543" ResizeMode="NoResize" WindowStyle="None" Icon="/logo.png">
     <Window.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">

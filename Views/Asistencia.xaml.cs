@@ -4,12 +4,10 @@ using System.Configuration;
 using System.Data;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace WPF_GymProManager.Views
 {
-    /// <summary>
-    /// Lógica de interacción para Asistencia.xaml
-    /// </summary>
     public partial class Asistencia : UserControl
     {
         private string connectionString;
@@ -18,41 +16,31 @@ namespace WPF_GymProManager.Views
         {
             InitializeComponent();
             CargarDatos();
-
-            // Obtener la cadena de conexión desde el archivo de configuración
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
         }
 
         void CargarDatos()
         {
-            // Obtener la cadena de conexión desde el archivo de configuración
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
-
-            // Crear una conexión a la base de datos
             using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 try
                 {
-                    // Abrir la conexión
                     connection.Open();
-
-                    // Definir la consulta SQL para obtener los datos de asistencia con la información adicional de clientes y membresías
                     string query = "SELECT ta.ID AS ID_Asistencia, COALESCE(td.Nombre, 'N/A') AS Nombre, COALESCE(td.ApellidoPaterno, 'N/A') AS Apellido, tm.TipoMembresia, ta.FechaHoraAsistencia " +
                                    "FROM tasistencia ta " +
                                    "INNER JOIN tclientes tc ON ta.TClienteID = tc.ID " +
                                    "INNER JOIN tdatosclientes td ON tc.TDatosClientesID = td.ID " +
                                    "INNER JOIN tmembresias tm ON tc.MembresiaID = tm.ID";
-
-                    // Crear un comando MySQL para ejecutar la consulta
                     MySqlCommand command = new MySqlCommand(query, connection);
-
-                    // Crear un adaptador de datos MySQL para ejecutar el comando y llenar un DataSet
                     MySqlDataAdapter adapter = new MySqlDataAdapter(command);
                     System.Data.DataSet dataSet = new System.Data.DataSet();
                     adapter.Fill(dataSet, "Asistencia");
 
-                    // Asignar el DataSet como origen de datos del control (por ejemplo, un DataGrid)
-                    GridDatos.ItemsSource = dataSet.Tables["Asistencia"].DefaultView;
+                    // Ordenar el DataView por FechaHoraAsistencia en orden ascendente
+                    DataView dv = dataSet.Tables["Asistencia"].DefaultView;
+                    dv.Sort = "FechaHoraAsistencia ASC";
+                    GridDatos.ItemsSource = dv;
                 }
                 catch (Exception ex)
                 {
@@ -61,23 +49,15 @@ namespace WPF_GymProManager.Views
             }
         }
 
-
-
-
-
         private void Registrar(object sender, RoutedEventArgs e)
         {
-            // Obtener el código de acceso ingresado por el usuario
             string codigoAcceso = CodigoAccesoTextBox.Text.Trim();
-
-            // Verificar si el código de acceso es un número
             if (!EsNumero(codigoAcceso))
             {
                 MessageBox.Show("El código de acceso debe ser numérico.");
                 return;
             }
 
-            // Verificar si el código de acceso existe en la base de datos
             if (!CodigoAccesoExiste(codigoAcceso))
             {
                 MessageBox.Show("El código de acceso no existe.");
@@ -85,9 +65,7 @@ namespace WPF_GymProManager.Views
             }
 
             MySqlConnection connection = new MySqlConnection(connectionString);
-
-            // Obtener los datos del cliente asociados al código de acceso
-            string query = "SELECT tc.ID, td.Nombre, td.ApellidoPaterno, td.ApellidoMaterno, tm.TipoMembresia " +
+            string query = "SELECT tc.ID, td.Nombre, td.ApellidoPaterno, td.ApellidoMaterno, tm.TipoMembresia, tm.DuracionMeses, tc.FechaRegistro " +
                            "FROM tclientes tc " +
                            "INNER JOIN tdatosclientes td ON tc.TDatosClientesID = td.ID " +
                            "INNER JOIN tmembresias tm ON tc.MembresiaID = tm.ID " +
@@ -103,15 +81,36 @@ namespace WPF_GymProManager.Views
 
                 if (reader.Read())
                 {
-                    // Obtener los datos del cliente
                     int clienteID = reader.GetInt32("ID");
                     string nombre = reader.GetString("Nombre");
                     string apellidoPaterno = reader.GetString("ApellidoPaterno");
                     string apellidoMaterno = reader.GetString("ApellidoMaterno");
                     string tipoMembresia = reader.GetString("TipoMembresia");
+                    int duracionMeses = reader.GetInt32("DuracionMeses");
+                    DateTime fechaRegistro = reader.GetDateTime("FechaRegistro");
 
-                    // Registrar la asistencia del cliente
-                    RegistrarAsistencia(clienteID);
+                    Cliente cliente = new Cliente
+                    {
+                        FechaRegistro = fechaRegistro,
+                        TipoMembresia = tipoMembresia,
+                        DuracionMeses = duracionMeses
+                    };
+                    int diasRestantes = cliente.CalcularDiasRestantes();
+
+                    if (diasRestantes > 0)
+                    {
+                        RegistrarAsistencia(clienteID);
+                        MessageBox.Show($"Asistencia registrada para: {nombre} {apellidoPaterno} {apellidoMaterno}. " +
+                                        $"Días restantes de membresía ({tipoMembresia}): {diasRestantes}");
+
+                        // Limpiar el TextBox de código de acceso
+                        CodigoAccesoTextBox.Clear();
+                        Content = new Asistencia();
+                    }
+                    else
+                    {
+                        MessageBox.Show($"La membresía de {nombre} {apellidoPaterno} {apellidoMaterno} está vencida.");
+                    }
                 }
                 else
                 {
@@ -148,7 +147,6 @@ namespace WPF_GymProManager.Views
         private bool CodigoAccesoExiste(string codigoAcceso)
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
-
             string query = "SELECT COUNT(*) FROM tclientes WHERE Acceso = @codigoAcceso";
             MySqlCommand command = new MySqlCommand(query, connection);
             command.Parameters.AddWithValue("@codigoAcceso", codigoAcceso);
@@ -176,11 +174,7 @@ namespace WPF_GymProManager.Views
         private void RegistrarAsistencia(int clienteID)
         {
             MySqlConnection connection = new MySqlConnection(connectionString);
-
-            // Obtener la fecha y hora actual
             DateTime fechaHoraActual = DateTime.Now;
-
-            // Insertar la asistencia del cliente en la base de datos
             string query = "INSERT INTO tasistencia (TClienteID, FechaHoraAsistencia) " +
                            "VALUES (@clienteID, @fechaHoraActual)";
 
@@ -192,11 +186,11 @@ namespace WPF_GymProManager.Views
             {
                 connection.Open();
                 int rowsAffected = command.ExecuteNonQuery();
-                MessageBox.Show("Asistencia registrada correctamente.");
+                //MessageBox.Show("Asistencia registrada correctamente.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Error al registrar la asistencia: " + ex.Message);
+                //MessageBox.Show("Error al registrar la asistencia: " + ex.Message);
             }
             finally
             {
@@ -206,6 +200,5 @@ namespace WPF_GymProManager.Views
                 }
             }
         }
-
     }
 }

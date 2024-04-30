@@ -1,12 +1,13 @@
-﻿<UserControl x:Class="WPF_GymProManager.Views.Equipo"
-              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<UserControl x:Class="WPF_GymProManager.Views.Venta"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:WPF_GymProManager.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="700" d:DesignWidth="1240">
+             d:DesignHeight="700" d:DesignWidth="1240"
+             Background="Transparent"
+             FontSize="15">
     <UserControl.Resources>
         <Style x:Key="FocusVisual">
             <Setter Property="Control.Template">
@@ -156,6 +157,7 @@
         <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
         <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
         <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+        <!--#endregion-->
         <!--#region TextBoxStyle-->
         <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
@@ -214,167 +216,225 @@
         </Style>
         <!--#endregion-->
     </UserControl.Resources>
-    <!--#Region Proyecto-->
     <Border CornerRadius="10"
             Background="Transparent">
-        <Grid>
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="20"/>
-
-                    <ColumnDefinition Width="221*"/>
-                    <ColumnDefinition Width="119*"/>
-                    <ColumnDefinition Width="154*"/>
-                    <ColumnDefinition Width="170*"/>
-                    <ColumnDefinition Width="221*"/>
-
-                    <ColumnDefinition Width="20"/>
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="50"/>
-                    <RowDefinition Height="30"/>
-                    <RowDefinition Height="15"/>
-                    <RowDefinition/>
-
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition Height="20"/>
-                </Grid.RowDefinitions>
-                <!--#region Titulo-->
-                <TextBlock
-                    Grid.ColumnSpan="3"
-                    Text="Detalles del Equipo"
-                    Foreground="#455A64"
-                    FontSize="30"
-                    FontFamily="Monserrat"
-                    HorizontalAlignment="Center" Grid.Column="2" Height="36" Width="279" Margin="0,7,0,7"/>
-                <!--#endregion-->
-                <!--#region Buscador-->
-                <TextBlock Grid.Row="1"
-                    Grid.Column="1"
-                    Text="Buscar Equipo:"
-                    HorizontalAlignment="Left"
-                    FontSize="20"
-                    FontFamily="Monserrat"
-                    Foreground="#455A64"
-                    Margin="144,2,0,2" Width="146"/>
-                <!--TextBox-->
-                <TextBox x:Name="tbBuscar" Style="{DynamicResource TextBoxStyle}" TextAlignment="Center"
-                    Background="GhostWhite"
-                    Grid.Column="2"
-                    Grid.Row="1"
-                    FontSize="20"
-                    FontFamily="Monserrat" Grid.ColumnSpan="2" TextChanged="Buscando"/>
-                <!--Boton Buscar-->
-                <Button Style="{DynamicResource ButtonStyle}" x:Name="btnBuscar"
-                    Grid.Column="4"
-                    Grid.Row="1"
-                    Background="#455A64"
-                    Cursor="Hand"
-                    Width="100"
-                    HorizontalAlignment="Center" Visibility="Hidden">
-                    <TextBlock Text="Buscar"
-                        Foreground="White"
-                        FontSize="15"
-                        FontFamily="Montserrat"/>
-                </Button>
-                <!--Boton Agregar-->
-                <Button x:Name="btnAgregar"
-                    Grid.Column="5"
-                    Background="#455A64"
-                    Margin="50,0,0,0"
-                    Cursor="Hand"
-                    Width="100"
-                    HorizontalAlignment="Left" Style="{DynamicResource ButtonStyle}" 
-                    Grid.Row="1"
-                    Click="Agregar">
-                    <TextBlock Text="Agregar"
-                        Foreground="White"
-                        FontSize="15"
-                        FontFamily="Montserrat"/>
-                </Button>
-                <!--#endregion-->
-                <!--#region  DataGrid-->
-                <DataGrid Style="{DynamicResource DataGridStyle}" Grid.Row="3"
-                    Grid.Column="1"
-                    Grid.ColumnSpan="5" 
-                    Grid.RowSpan="4"
-                    x:Name="GridDatos"
-                    AutoGenerateColumns="False"
-                    Background="GhostWhite"
-                    Foreground="#455A64"
-                    FontSize="15"
-                    CanUserAddRows="False"
-                    CanUserResizeColumns="True"
-                    CanUserResizeRows="False"
-                    CanUserSortColumns="False"
-                    RowBackground="#ECEFF1"
-                    HeadersVisibility="Column"
-                    GridLinesVisibility="Horizontal"
-                    HorizontalGridLinesBrush="Transparent">
-                    <DataGrid.Columns>
-                        <DataGridTemplateColumn Header="Opciones de Administrador"
-                            Width="240">
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <DockPanel>
-                                        <Button Name="btnConsultar" 
-                                                Content="Consultar"
-                                                Background="#CFD8DC"
-                                                Width="80"
-                                                BorderBrush="Transparent"
-                                                FontSize="10"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}" 
-                                                Click="Consultar"
-                                                CommandParameter="{Binding ID_Equipo}"/>
-                                        <Button Name="btnEditar" 
-                                                Content="Editar"
-                                                Background="#CFD8DC"
-                                                Width="80"
-                                                BorderBrush="Transparent"
-                                                FontSize="10"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}"
-                                                Click="Actualizar"
-                                                CommandParameter="{Binding ID_Equipo}"/>
-                                        <Button Name="btnEliminar" 
-                                                Content="Eliminar"
-                                                Background="#CFD8DC"
-                                                Width="80"
-                                                BorderBrush="Transparent"
-                                                FontSize="10"
-                                                VerticalAlignment="Center"
-                                                HorizontalAlignment="Center"
-                                                Cursor="Hand" Height="24"
-                                                Style="{DynamicResource ButtonStyle}" Click="Eliminar"
-                                                CommandParameter="{Binding ID_Equipo}"/>
-                                    </DockPanel>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        <DataGridTextColumn Header="ID"
-                            Width="120" Binding="{Binding ID_Equipo}"/>
-                        <DataGridTextColumn Header="Nombre"
-                            Width="*" Binding="{Binding NombreEquipo}"/>
-                        <DataGridTextColumn Header="Cantidad"
-                            Width="120" Binding="{Binding Cantidad}"/>
-                    </DataGrid.Columns>
-                </DataGrid>
-                <!--#endregion-->
-                <!--#region FrameUsuarios-->
-                <Frame x:Name="FrameUsuarios"
-                       Grid.Column="0"
+        <Grid Cursor="Hand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20"/>
+                <ColumnDefinition Width="800"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="20"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="20"/>
+                <RowDefinition  Height="70"/>
+                <RowDefinition/>
+                <RowDefinition Height="90"/>
+                <RowDefinition Height="20"/>
+            </Grid.RowDefinitions>
+            <!--#region Titulo-->
+            <TextBlock Text="Punto de venta"
                        Grid.Row="0"
-                       Grid.RowSpan="10"
-                       Grid.ColumnSpan="10"/>
-                <!--#endregion-->
-            </Grid>
+                       Grid.Column="0"
+                       Grid.ColumnSpan="4"
+                       Foreground="#455A64"
+                       FontSize="30"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"/>
+            <!--#endregion-->
+            <!--#region Buscador-->
+            <Label Content="Nombre"
+                   Foreground="#455A64"
+                   Grid.Row="2"
+                   Grid.Column="1"/>
+            <TextBox Style="{DynamicResource TextBoxStyle}" Grid.Row="2"
+                     Grid.Column="1"
+                     HorizontalAlignment="Left"
+                     Width="200"
+                     Margin="100,0,0,0"
+                     TextAlignment="Center"
+                     FontSize="20"
+                     Name="tbBuscar"/>
+            <Button x:Name="btnBuscar"
+                    Background="#455A64"
+                    Foreground="White"
+                    Content="Buscar"
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Cursor="Hand"
+                    Width="100"
+                    Margin="347,0,0,0"
+                    HorizontalAlignment="Left"
+                    Style="{DynamicResource ButtonStyle}"
+                    Click="BuscarProducto"/>
+            <Button x:Name="btnAgregar"
+                    Background="#455A64"
+                    Foreground="White"
+                    Content="Agregar prodcuto"
+                    Grid.Row="2"
+                    Grid.RowSpan="3"
+                    Grid.Column="2"
+                    Cursor="Hand"
+                    Style="{DynamicResource ButtonStyle}"
+                    Click="AgregarProducto"/>
+            <Label Content="Nombre"
+                   Foreground="#455A64"
+                   Grid.Row="4"
+                   Grid.Column="1"/>
+            <TextBox Style="{DynamicResource TextBoxStyle}"
+                     Grid.Row="4"
+                     Grid.Column="1"
+                     HorizontalAlignment="Left"
+                     Width="200"
+                     Margin="100,0,0,0"
+                     TextAlignment="Center"
+                     FontSize="20"
+                     Name="tbNombre"
+                     IsEnabled="False"/>
+            <Label Content="Precio"
+                   Foreground="#455A64"
+                   Grid.Row="4"
+                   Margin="325,0,0,0"
+                   Grid.Column="1"/>
+            <TextBox Style="{DynamicResource TextBoxStyle}"
+                     Grid.Row="4"
+                     Grid.Column="1"
+                     HorizontalAlignment="Left"
+                     Width="80"
+                     Margin="400,0,0,0"
+                     TextAlignment="Center"
+                     FontSize="20"
+                     Name="tbPrecio"
+                     IsEnabled="False"/>
+            <Label Content="Cantidad"
+                   Foreground="#455A64"
+                   Grid.Row="4"
+                   Grid.Column="1"
+                   Margin="500,0,0,0"/>
+            <TextBox Style="{DynamicResource TextBoxStyle}"
+                     Grid.Row="4"
+                     Grid.Column="1"
+                     HorizontalAlignment="Left"
+                     Width="80"
+                     Margin="580,0,0,0"
+                     TextAlignment="Center"
+                     FontSize="20"
+                     Name="tbCantidad"/>
+            <!--#endregion-->
+            <!--#region DataGrid-->
+            <DataGrid AutoGenerateColumns="False"
+                      FontSize="15"
+                      Name="GridProductos"
+                      CanUserAddRows="False"
+                      CanUserResizeColumns="True"
+                      CanUserResizeRows="False"
+                      RowBackground="Transparent"
+                      HeadersVisibility="Column"
+                      GridLinesVisibility="Horizontal"
+                      Grid.Row="6"
+                      Grid.Column="1"
+                      Grid.RowSpan="2"
+                      Style="{DynamicResource DataGridStyle}"
+                      ItemsSource="{Binding Productos}">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Nombre"
+                                        Width="200"
+                                        Binding="{Binding Nombre}"/>
+                    <DataGridTextColumn Header="Precio Unitario"
+                                        Width="*"
+                                        Binding="{Binding Precio}"/>
+                    <DataGridTextColumn Header="Cantidad"
+                                        Width="*"
+                                        Binding="{Binding Cantidad}"/>
+                    <DataGridTextColumn Header="Precio total"
+                                        Width="*"
+                                        Binding="{Binding MontoTotal}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <!--#endregion-->
+            <!--#region Botones-->
+            <DockPanel Grid.Column="2"
+                       Grid.Row="6"
+                       Margin="10,0,0,0"
+                       HorizontalAlignment="Center">
+                <Button Width="80"
+                        Background="#455A64"
+                        Foreground="White"
+                        Height="70"
+                        Cursor="Hand"
+                        Click="EliminarProducto"
+                        Content="Eliminar"
+                        HorizontalAlignment="Left"
+                        Style="{DynamicResource ButtonStyle}"/>
+                <Button Width="80"
+                        Background="#455A64"
+                        Foreground="White"
+                        Cursor="Hand"
+                        Click="CambiarCantidad"
+                        Content="Cantidad"
+                        Margin="30,0,30,0"
+                        Style="{DynamicResource ButtonStyle}"
+                        HorizontalAlignment="Center"/>
+                <Button Width="80"
+                        Background="#455A64"
+                        Foreground="White"
+                        Height="70"
+                        Cursor="Hand"
+                        Click="Efectivo"
+                        Content="Efectivo"
+                        HorizontalAlignment="Left"
+                        Style="{DynamicResource ButtonStyle}"/>
+            </DockPanel>
+            <StackPanel Grid.Row="7"
+                        Grid.Column="2"
+                        VerticalAlignment="Center">
+                <Label Content="Total: $0.00"
+                       Name="lblTotal"
+                       FontWeight="SemiBold"
+                       HorizontalContentAlignment="Right"
+                       FontSize="30"
+                       Foreground="#455A64"/>
+                <Label Content="Efectivo: $0.00"
+                       Name="lblEfectivo"
+                       FontWeight="SemiBold"
+                       HorizontalContentAlignment="Right"
+                       FontSize="30"
+                       Foreground="#455A64"/>
+                <Label Content="Cambio: $0.00"
+                       Name="lblCambio"
+                       FontWeight="SemiBold"
+                       HorizontalContentAlignment="Right"
+                       FontSize="30"
+                       Foreground="#455A64"/>
+            </StackPanel>
+            <DockPanel Grid.Column="2"
+                       Grid.Row="8"
+                       Margin="10,0,0,0"
+                       HorizontalAlignment="Center">
+                <Button Width="120"
+                        Height="70"
+                        Background="#455A64"
+                        Foreground="White"
+                        Cursor="Hand"
+                        Click="AnularOrden"
+                        Content="Anular Orden"
+                        Style="{DynamicResource ButtonStyle}"/>
+                <Button Width="120"
+                        Height="70"
+                        Background="#455A64"
+                        Foreground="White"
+                        Cursor="Hand"
+                        Click="Pagar"
+                        Content="Pagar"
+                        Margin="10,0,0,0"
+                        Style="{DynamicResource ButtonStyle}"/>
+            </DockPanel>
+            <!--#endregion-->
         </Grid>
     </Border>
 </UserControl>

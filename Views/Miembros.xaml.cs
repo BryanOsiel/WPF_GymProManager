@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -193,5 +194,70 @@ namespace WPF_GymProManager.Views
             // Mostrar la ventana en el Frame
             FrameUsuarios.Content = ventana;
         }
+
+        private void Buscando(object sender, TextChangedEventArgs e)
+        {
+            // Obtener el texto de búsqueda
+            string textoBusqueda = tbBuscar.Text;
+
+            // Realizar la búsqueda en la base de datos
+            DataTable dt = BuscarEnBaseDeDatos(textoBusqueda);
+
+            // Mostrar los resultados en el DataGrid
+            GridDatos.ItemsSource = dt.DefaultView;
+        }
+
+        private DataTable BuscarEnBaseDeDatos(string textoBusqueda)
+        {
+            DataTable dt = new DataTable();
+
+            try
+            {
+                // Obtener la cadena de conexión desde el archivo de configuración
+                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+                // Crear una conexión a la base de datos
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    // Abrir la conexión
+                    connection.Open();
+
+                    // Definir la consulta SQL para la búsqueda
+                    string sqlQuery = @"SELECT 
+                                    m.ID AS ID_Cliente,
+                                    dm.Nombre AS Nombre,
+                                    dm.ApellidoPaterno AS Apellido,
+                                    dm.CorreoElectronico AS Email,
+                                    dm.Telefono AS Telefono,
+                                    mb.TipoMembresia AS Tipo_Membresia
+                                FROM 
+                                    tclientes m
+                                JOIN 
+                                    tdatosclientes dm ON m.TDatosClientesID = dm.ID
+                                JOIN 
+                                    tmembresias mb ON m.MembresiaID = mb.ID
+                                WHERE 
+                                    dm.Nombre LIKE @TextoBusqueda OR
+                                    dm.ApellidoPaterno LIKE @TextoBusqueda OR
+                                    dm.CorreoElectronico LIKE @TextoBusqueda OR
+                                    mb.TipoMembresia LIKE @TextoBusqueda";
+
+                    // Crear un comando MySQL para ejecutar la consulta
+                    MySqlCommand command = new MySqlCommand(sqlQuery, connection);
+                    command.Parameters.AddWithValue("@TextoBusqueda", "%" + textoBusqueda + "%");
+
+                    // Crear un adaptador de datos MySQL para ejecutar el comando y llenar un DataSet
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(command);
+                    adapter.Fill(dt);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Error al buscar datos: " + ex.Message);
+            }
+
+            return dt;
+        }
+
     }
 }

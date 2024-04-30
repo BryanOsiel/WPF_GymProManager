@@ -13,6 +13,7 @@ namespace WPF_GymProManager
     public partial class Login : Window
     {
         private string connectionString;
+        private bool loggedIn = false; // Variable para rastrear si el usuario ha iniciado sesión correctamente
 
         public Login()
         {
@@ -33,14 +34,19 @@ namespace WPF_GymProManager
             string nombreUsuario = tbUsuario.Text;
             string contrasena = tbContrasena.Password;
 
+            // Verificar si el usuario ya ha iniciado sesión
+            if (loggedIn)
+            {
+                return;
+            }
+
             // Realizar la autenticación del empleado
             if (AutenticarEmpleado(nombreUsuario, contrasena))
             {
                 MainWindow mainWindow = new MainWindow();
+                mainWindow.Closed += (s, args) => this.Close(); // Cerrar esta ventana cuando se cierre la ventana principal
                 mainWindow.Show();
-
-                // Cerrar la ventana de inicio de sesión
-                
+                loggedIn = true; // Establecer loggedIn en true para evitar abrir otra ventana de inicio de sesión
             }
             else
             {
@@ -52,10 +58,8 @@ namespace WPF_GymProManager
 
                 // Ocultar el aviso
                 lbAviso.Visibility = Visibility.Collapsed;
-
             }
         }
-
 
         private bool AutenticarEmpleado(string nombreUsuario, string contrasena)
         {

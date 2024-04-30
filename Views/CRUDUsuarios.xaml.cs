@@ -87,6 +87,15 @@ namespace WPF_GymProManager.Views
                     return;
                 }
 
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbGenero.Text != "Masculino" && tbGenero.Text != "Femenino" && tbGenero.Text != "Otro")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El género debe ser 'Masculino', 'Femenino' u 'Otro'.");
+                    return;
+                }
+
+
 
                 // Obtener la cadena de conexión desde App.config
                 string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -395,6 +404,14 @@ namespace WPF_GymProManager.Views
                 if (!Regex.IsMatch(correo, @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"))
                 {
                     MessageBox.Show("Por favor, introduzca un correo electrónico válido.");
+                    return;
+                }
+
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbGenero.Text != "Masculino" && tbGenero.Text != "Femenino" && tbGenero.Text != "Otro")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El género debe ser 'Masculino', 'Femenino' u 'Otro'.");
                     return;
                 }
 
@@ -724,6 +741,11 @@ namespace WPF_GymProManager.Views
             {
                 MessageBox.Show("Error al generar el código de acceso: " + ex.Message);
             }
+        }
+
+        private void tbNumero_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

@@ -64,6 +64,50 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
+        <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
+        <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
+        <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+            <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+            <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
+            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+            <Setter Property="HorizontalContentAlignment" Value="Left"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="AllowDrop" Value="true"/>
+            <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
+            <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type TextBox}">
+                        <Border x:Name="border" Background="{TemplateBinding Background}"  CornerRadius="5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="True">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsEnabled" Value="false">
+                                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="true">
+                                <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <MultiTrigger>
+                    <MultiTrigger.Conditions>
+                        <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
+                        <Condition Property="IsSelectionActive" Value="false"/>
+                    </MultiTrigger.Conditions>
+                    <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                </MultiTrigger>
+            </Style.Triggers>
+        </Style>
         <!--#endregion-->
 
     </Page.Resources>
@@ -115,17 +159,17 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Calle:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="0" Grid.Column="2" x:Name="tbCalle" Width="200" Margin="64,5,63,5"/>
+                    <TextBox Style="{DynamicResource TextBoxStyle}" Grid.Row="0" Grid.Column="2" x:Name="tbCalle" Width="200" Margin="64,5,63,5"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Número:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" x:Name="tbNumero" Width="200" Margin="64,5,63,5"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" x:Name="tbNumero" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Colonia:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" x:Name="tbColonia" Width="200" Margin="64,5,63,5"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" x:Name="tbColonia" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Código Postal:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="3" Grid.Column="2" x:Name="tbCodigoPostal" Width="200" Margin="64,5,63,5"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" x:Name="tbCodigoPostal" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Municipio:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="4" Grid.Column="2" x:Name="tbMunicipio" Width="200" Margin="64,5,63,5"/>
+                    <TextBox Grid.Row="4" Grid.Column="2" x:Name="tbMunicipio" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Estado:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="5" Grid.Column="2" x:Name="tbEstado" Width="200" Margin="64,5,63,5"/>
+                    <TextBox Grid.Row="5" Grid.Column="2" x:Name="tbEstado" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
                 </Grid>
 
                 <!-- Datos Empleado -->
@@ -145,19 +189,19 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Nombre:" Margin="5"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbNombre" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbNombre" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Apellido Paterno:" Margin="5"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbApellidoPaterno" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbApellidoPaterno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Apellido Materno:" Margin="5"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbApellidoMaterno" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbApellidoMaterno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Género:" Margin="5"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbGenero" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbGenero" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Fecha de Nacimiento:" Margin="5"/>
                     <DatePicker Grid.Row="4" Grid.Column="1" x:Name="dpFechaNacimiento" Width="200" Margin="5"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Email:" Margin="5"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbEmail" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbEmail" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Teléfono:" Margin="5"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="tbTelefono" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="tbTelefono" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                 </Grid>
 
                 <!-- Empleado -->
@@ -177,15 +221,15 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Puesto:" Margin="5"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Turno:" Margin="5"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbTurno" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbTurno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Fecha de Contratación:" Margin="5"/>
-                    <DatePicker Grid.Row="2" Grid.Column="1" x:Name="dpFechaContratacion" Width="200" Margin="5"/>
+                    <DatePicker Grid.Row="2" Grid.Column="1" x:Name="dpFechaContratacion" Width="200" Margin="5" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Salario:" Margin="5"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSalario" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSalario" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Código de Acceso:" Margin="5"/>
                     <Button x:Name="btnGenerarCodigoAcceso" Grid.Row="4" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Margin="241,5,0,5" Width="22" Grid.Column="1" Click="btnGenerarCodigo_Click" Visibility="Hidden"/>
-                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbCodigoAcceso" Width="200" Margin="5"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbPuesto" Width="200" Margin="5"/>
+                    <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbCodigoAcceso" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbPuesto" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
                 </Grid>
 
                 <!-- Contraseña -->
@@ -199,7 +243,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Contraseña:" Margin="5"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbContraseña" Width="200" Margin="97,5,44,5"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbContraseña" Width="200" Margin="97,5,44,5" Style="{DynamicResource TextBoxStyle}"/>
                 </Grid>
                 <Grid Grid.Row="8" Grid.Column="1">
                     <Grid.ColumnDefinitions>

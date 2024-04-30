@@ -3,12 +3,62 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:fa="http://schemas.awesome.incremented/wpf/xaml/fontawesome.sharp"
              xmlns:local="clr-namespace:WPF_GymProManager.Views"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     <Border Background="Transparent">
         <Grid>
-            <TextBlock Text="Bienvenido" FontSize="30" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Border  BorderBrush="Transparent" BorderThickness="1" Margin="10" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4">
+                <TextBlock Text="Inicio" FontSize="40" HorizontalAlignment="Center" Foreground="#455A64"/>
+            </Border>
+
+            <!-- Usuarios -->
+            <Border BorderBrush="Transparent" BorderThickness="1" Margin="0,30,0,0" Grid.Row="1" Grid.Column="0"  VerticalAlignment="Top" >
+                <StackPanel>
+                    <fa:IconImage Icon="userlarge" Height="76" Width="145"  Foreground="#455A64"/>
+                    <TextBlock Text="Usuarios" FontSize="20" HorizontalAlignment="Center" Margin="15" Foreground="#455A64"/>
+                    <Label x:Name="lbUsuarios" Content="0" FontSize="50" HorizontalAlignment="Center" Foreground="#455A64"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Miembros -->
+            <Border BorderBrush="Transparent" BorderThickness="1" Margin="0,30,0,0" Grid.Row="1" Grid.Column="1"  VerticalAlignment="Stretch">
+                <StackPanel Margin="0,0,0,109">
+                    <fa:IconImage Icon="usergroup" Height="76" Width="145"  Foreground="#455A64"/>
+                    <TextBlock Text="Miembros" FontSize="20" HorizontalAlignment="Center" Margin="15" Foreground="#455A64"/>
+                    <Label x:Name="lbMiembros" Content="0" FontSize="50" HorizontalAlignment="Center"  VerticalAlignment="Center" Foreground="#455A64"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Equipo -->
+            <Border BorderBrush="Transparent" BorderThickness="1" Margin="0,30,0,0" Grid.Row="1" Grid.Column="2"  VerticalAlignment="Top">
+                <StackPanel>
+                    <fa:IconImage Icon="dumbbell" Height="76" Width="145" Foreground="#455A64" />
+                    <TextBlock Text="Equipo" FontSize="20" HorizontalAlignment="Center" Margin="15" Foreground="#455A64"/>
+                    <Label x:Name="lbEquipo" Content="0" FontSize="50" HorizontalAlignment="Center" Foreground="#455A64"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Asistencia -->
+            <Border BorderBrush="Transparent" BorderThickness="1" Margin="0,30,0,0" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top">
+                <StackPanel>
+                    <fa:IconImage Icon="UserClock" Height="76" Width="145"  Foreground="#455A64"/>
+                    <TextBlock Text="Asistencia" FontSize="20" HorizontalAlignment="Center" Margin="15" Foreground="#455A64"/>
+                    <Label x:Name="lbAsistencia" Content="0" FontSize="50" HorizontalAlignment="Center" Foreground="#455A64"/>
+                </StackPanel>
+            </Border>
         </Grid>
     </Border>
 </UserControl>

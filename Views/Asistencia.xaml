@@ -253,12 +253,12 @@
                 <!--#region Buscador-->
                 <TextBlock Grid.Row="1"
                     Grid.Column="1"
-                    Text="Registar asistencia:"
+                    Text="Registrar asistencia:"
                     HorizontalAlignment="Left"
                     FontSize="20"
                     FontFamily="Monserrat"
                     Foreground="#455A64"
-                    Margin="125,6,0,6" Height="18" Width="165"/>
+                    Margin="114,4,0,3" Width="176"/>
                 <!--TextBox-->
                 <TextBox x:Name="CodigoAccesoTextBox" Style="{DynamicResource TextBoxStyle}" TextAlignment="Center"
                     Background="GhostWhite"

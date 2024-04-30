@@ -91,6 +91,15 @@ namespace WPF_GymProManager.Views
                     return;
                 }
 
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbGenero.Text != "Masculino" && tbGenero.Text != "Femenino" && tbGenero.Text != "Otro")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El género debe ser 'Masculino', 'Femenino' u 'Otro'.");
+                    return;
+                }
+
+
                 // Obtener la cadena de conexión desde App.config
                 string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
@@ -384,6 +393,15 @@ namespace WPF_GymProManager.Views
                     MessageBox.Show("El campo Acceso debe contener exactamente 5 caracteres.");
                     return;
                 }
+
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbGenero.Text != "Masculino" && tbGenero.Text != "Femenino" && tbGenero.Text != "Otro")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El género debe ser 'Masculino', 'Femenino' u 'Otro'.");
+                    return;
+                }
+
 
                 // Validar que el correo electrónico tenga un formato válido
                 string correo = tbEmail.Text;

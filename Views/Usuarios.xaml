@@ -259,12 +259,12 @@
                     Foreground="#455A64"
                     Margin="144,6,0,6" Height="18" Width="146"/>
                 <!--TextBox-->
-                <TextBox Style="{DynamicResource TextBoxStyle}" TextAlignment="Center"
+                <TextBox x:Name="tbBuscar" Style="{DynamicResource TextBoxStyle}" TextAlignment="Center"
                     Background="GhostWhite"
                     Grid.Column="2"
                     Grid.Row="1"
                     FontSize="20"
-                    FontFamily="Monserrat" Grid.ColumnSpan="2"/>
+                    FontFamily="Monserrat" Grid.ColumnSpan="2" TextChanged="Buscando"/>
                 <!--Boton Buscar-->
                 <Button Style="{DynamicResource ButtonStyle}" x:Name="btnBuscar"
                     Grid.Column="4"
@@ -272,7 +272,7 @@
                     Background="#455A64"
                     Cursor="Hand"
                     Width="100"
-                    HorizontalAlignment="Center">
+                    HorizontalAlignment="Center" Visibility="Hidden">
                     <TextBlock Text="Buscar"
                         Foreground="White"
                         FontSize="15"
