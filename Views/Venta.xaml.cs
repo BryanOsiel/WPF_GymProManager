@@ -250,6 +250,8 @@ namespace WPF_GymProManager.Views
                 return;
             }
 
+
+
             // Obtener la conexión a la base de datos desde el archivo de configuración
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
@@ -313,10 +315,6 @@ namespace WPF_GymProManager.Views
                 }
             }
         }
-
-
-
-
 
         private void Efectivo(object sender, RoutedEventArgs e)
         {

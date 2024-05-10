@@ -88,12 +88,65 @@ namespace WPF_GymProManager.Views
                 }
 
                 // Comprueba si el texto no coincide con las opciones válidas
-                if (tbGenero.Text != "Masculino" && tbGenero.Text != "Femenino" && tbGenero.Text != "Otro")
+                if (tbGenero.Text.ToLower() != "masculino" && tbGenero.Text.ToLower() != "femenino" && tbGenero.Text.ToLower() != "otro")
                 {
                     // El texto no coincide con las opciones válidas
                     MessageBox.Show("El género debe ser 'Masculino', 'Femenino' u 'Otro'.");
                     return;
                 }
+
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbTurno.Text.ToLower() != "matutino" && tbTurno.Text.ToLower() != "vespertino")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El turno debe ser 'Matutino' o 'Vespertino'.");
+                    return;
+                }
+
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbPuesto.Text.ToLower() != "empleado" && tbPuesto.Text.ToLower() != "administrador")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El puesto debe ser 'Empleado' o 'Administrador'.");
+                    return;
+                }
+
+                // Obtener la fecha de nacimiento del DatePicker
+                DateTime fechaNacimiento = dpFechaNacimiento.SelectedDate ?? DateTime.MinValue;
+
+                // Obtener la fecha de contratación del DatePicker
+                DateTime fechaContratacion = dpFechaContratacion.SelectedDate ?? DateTime.MinValue;
+
+                // Calcular la edad actual
+                int edad = DateTime.Today.Year - fechaNacimiento.Year;
+
+                // Obtener la fecha actual
+                DateTime fechaActual = DateTime.Today;
+
+                // Restar un año si el cumpleaños aún no ha ocurrido este año
+                if (DateTime.Today < fechaNacimiento.AddYears(edad))
+                {
+                    edad--;
+                }
+
+                // Comprobar si la edad es menor de 18 años
+                if (edad < 18)
+                {
+                    // Si la edad es menor de 18 años, mostrar un mensaje de error
+                    MessageBox.Show("Debe ser mayor de edad para continuar.");
+                    return;
+                }
+
+                // Comprobar si la fecha de contratación es mayor que la fecha actual
+                if (fechaContratacion > fechaActual)
+                {
+                    // Si la fecha de contratación es mayor que la fecha actual, mostrar un mensaje de error
+                    MessageBox.Show("La fecha de contratación no puede ser mayor que la fecha actual.");
+                    return;
+                }
+
+
+
 
 
 
@@ -412,6 +465,64 @@ namespace WPF_GymProManager.Views
                 {
                     // El texto no coincide con las opciones válidas
                     MessageBox.Show("El género debe ser 'Masculino', 'Femenino' u 'Otro'.");
+                    return;
+                }
+
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbGenero.Text.ToLower() != "masculino" && tbGenero.Text.ToLower() != "femenino" && tbGenero.Text.ToLower() != "otro")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El género debe ser 'Masculino', 'Femenino' u 'Otro'.");
+                    return;
+                }
+
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbTurno.Text.ToLower() != "matutino" && tbTurno.Text.ToLower() != "vespertino")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El turno debe ser 'Matutino' o 'Vespertino'.");
+                    return;
+                }
+
+                // Comprueba si el texto no coincide con las opciones válidas
+                if (tbPuesto.Text.ToLower() != "empleado" && tbPuesto.Text.ToLower() != "administrador")
+                {
+                    // El texto no coincide con las opciones válidas
+                    MessageBox.Show("El puesto debe ser 'Empleado' o 'Administrador'.");
+                    return;
+                }
+
+                // Obtener la fecha de nacimiento del DatePicker
+                DateTime fechaNacimiento = dpFechaNacimiento.SelectedDate ?? DateTime.MinValue;
+
+                // Obtener la fecha de contratación del DatePicker
+                DateTime fechaContratacion = dpFechaContratacion.SelectedDate ?? DateTime.MinValue;
+
+                // Calcular la edad actual
+                int edad = DateTime.Today.Year - fechaNacimiento.Year;
+
+                // Restar un año si el cumpleaños aún no ha ocurrido este año
+                if (DateTime.Today < fechaNacimiento.AddYears(edad))
+                {
+                    edad--;
+                }
+
+                // Comprobar si la edad es menor de 18 años
+                if (edad < 18)
+                {
+                    // Si la edad es menor de 18 años, mostrar un mensaje de error
+                    MessageBox.Show("Debe ser mayor de edad para continuar.");
+                    return;
+                }
+
+                // Obtener la fecha actual
+                DateTime fechaActual = DateTime.Today;
+
+                // Comprobar si la fecha de contratación es mayor que la fecha actual
+                if (fechaContratacion > fechaActual)
+                {
+                    // Si la fecha de contratación es mayor que la fecha actual, mostrar un mensaje de error
+                    MessageBox.Show("La fecha de contratación no puede ser mayor que la fecha actual.");
                     return;
                 }
 

@@ -99,6 +99,35 @@ namespace WPF_GymProManager.Views
                     return;
                 }
 
+                // Validar la fecha de nacimiento para asegurarse de que el miembro tenga al menos 16 años
+                DateTime fechaNacimiento = dpFechaNacimiento.SelectedDate ?? DateTime.MinValue;
+                int edad = DateTime.Today.Year - fechaNacimiento.Year;
+                if (DateTime.Today < fechaNacimiento.AddYears(edad))
+                {
+                    edad--;
+                }
+                if (edad < 16)
+                {
+                    MessageBox.Show("El miembro debe tener al menos 16 años para registrarse.");
+                    return;
+                }
+
+                // Validar la membresía seleccionada
+                string membresia = tbMembresia.Text.ToLower();
+                if (membresia != "mensual" && membresia != "semestral" && membresia != "anual")
+                {
+                    MessageBox.Show("La membresía debe ser 'mensual', 'semestral' o 'anual'.");
+                    return;
+                }
+
+                // Validar la fecha de registro para asegurarse de que no sea mayor que la fecha actual
+                DateTime fechaRegistro = dpFechaRegistro.SelectedDate ?? DateTime.MinValue;
+                if (fechaRegistro > DateTime.Today)
+                {
+                    MessageBox.Show("La fecha de registro no puede ser mayor que la fecha actual.");
+                    return;
+                }
+
 
                 // Obtener la cadena de conexión desde App.config
                 string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -410,6 +439,36 @@ namespace WPF_GymProManager.Views
                     MessageBox.Show("Por favor, introduzca un correo electrónico válido.");
                     return;
                 }
+
+                // Validar la fecha de nacimiento para asegurarse de que el miembro tenga al menos 16 años
+                DateTime fechaNacimiento = dpFechaNacimiento.SelectedDate ?? DateTime.MinValue;
+                int edad = DateTime.Today.Year - fechaNacimiento.Year;
+                if (DateTime.Today < fechaNacimiento.AddYears(edad))
+                {
+                    edad--;
+                }
+                if (edad < 16)
+                {
+                    MessageBox.Show("El miembro debe tener al menos 16 años para registrarse.");
+                    return;
+                }
+
+                // Validar la membresía seleccionada
+                string membresia = tbMembresia.Text.ToLower();
+                if (membresia != "mensual" && membresia != "semestral" && membresia != "anual")
+                {
+                    MessageBox.Show("La membresía debe ser 'mensual', 'semestral' o 'anual'.");
+                    return;
+                }
+
+                // Validar la fecha de registro para asegurarse de que no sea mayor que la fecha actual
+                DateTime fechaRegistro = dpFechaRegistro.SelectedDate ?? DateTime.MinValue;
+                if (fechaRegistro > DateTime.Today)
+                {
+                    MessageBox.Show("La fecha de registro no puede ser mayor que la fecha actual.");
+                    return;
+                }
+
 
                 // Obtener la cadena de conexión desde App.config
                 string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;

@@ -263,9 +263,9 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Usuario:" FontSize="25" HorizontalAlignment="Left" Margin="11,38,0,37" Grid.Column="2" Grid.ColumnSpan="2" Grid.RowSpan="2"/>
-                        <TextBox Style="{DynamicResource TextBoxStyleLogin}" x:Name="tbUsuario" Grid.Column="1" Grid.ColumnSpan="3" Margin="21,29,10,29" Grid.Row="1" Grid.RowSpan="2" TextAlignment="Center" FontSize="20" RenderTransformOrigin="0.502,0.594" VerticalAlignment="Center" HorizontalContentAlignment="Center" />
+                        <TextBox Style="{DynamicResource TextBoxStyleLogin}" x:Name="tbUsuario" Grid.Column="1" Grid.ColumnSpan="3" Margin="21,29,10,29" Grid.Row="1" Grid.RowSpan="2" TextAlignment="Center" FontSize="20" RenderTransformOrigin="0.502,0.594" VerticalAlignment="Center" HorizontalContentAlignment="Center" MaxLength="10"/>
                         <TextBlock Grid.Row="2" Text="Contraseña:" FontSize="25" VerticalAlignment="Top" HorizontalAlignment="Left" Grid.ColumnSpan="3" Margin="90,46,0,0" Grid.Column="1" Grid.RowSpan="2"/>
-                        <PasswordBox Style="{DynamicResource PasswordBoxStyleLogin}" x:Name="tbContrasena" Grid.Column="1" Grid.ColumnSpan="3" Margin="20,25,10,42" Grid.Row="3" Grid.RowSpan="2" HorizontalContentAlignment="Center" FontSize="20" RenderTransformOrigin="0.498,0.569" VerticalAlignment="Center" />
+                        <PasswordBox Style="{DynamicResource PasswordBoxStyleLogin}" x:Name="tbContrasena" Grid.Column="1" Grid.ColumnSpan="3" Margin="20,25,10,42" Grid.Row="3" Grid.RowSpan="2" HorizontalContentAlignment="Center" FontSize="20" RenderTransformOrigin="0.498,0.569" VerticalAlignment="Center" MaxLength="15"/>
                         <Label Name="lbAviso" Content="Usuario o Contraseña incorrecta" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" Grid.ColumnSpan="3" Visibility="Hidden"/>
                         <Button Style="{DynamicResource ButtonStyleLoginCerrar}" x:Name="btnEntrar" Grid.Column="1" Grid.Row="5" Background="#455A64" Grid.ColumnSpan="3" Margin="98,0,98,19" Click="btnEntrar_Click">
                             <TextBlock Text="Entrar" Foreground="White" FontFamily="Arial" FontSize="20"/>

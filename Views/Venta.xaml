@@ -259,7 +259,8 @@
                      Margin="100,0,0,0"
                      TextAlignment="Center"
                      FontSize="20"
-                     Name="tbBuscar"/>
+                     Name="tbBuscar"
+                     MaxLength="15"/>
             <Button x:Name="btnBuscar"
                     Background="#455A64"
                     Foreground="White"
@@ -275,7 +276,7 @@
             <Button x:Name="btnAgregar"
                     Background="#455A64"
                     Foreground="White"
-                    Content="Agregar prodcuto"
+                    Content="Agregar producto"
                     Grid.Row="2"
                     Grid.RowSpan="3"
                     Grid.Column="2"
@@ -324,7 +325,8 @@
                      Margin="580,0,0,0"
                      TextAlignment="Center"
                      FontSize="20"
-                     Name="tbCantidad"/>
+                     Name="tbCantidad"
+                     MaxLength="3"/>
             <!--#endregion-->
             <!--#region DataGrid-->
             <DataGrid AutoGenerateColumns="False"

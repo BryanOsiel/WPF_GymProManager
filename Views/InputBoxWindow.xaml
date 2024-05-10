@@ -5,7 +5,7 @@
     <Border VerticalAlignment="Center" HorizontalAlignment="Center" Background="#D9D9D9"> 
         <Grid>
         <TextBlock Name="Texto" Text="Ingrese la nueva cantidad:" HorizontalAlignment="Center" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="txtNuevaCantidad" HorizontalAlignment="Center" Margin="10,35,0,0" VerticalAlignment="Top" Width="120"/>
+        <TextBox x:Name="txtNuevaCantidad" HorizontalAlignment="Center" Margin="10,35,0,0" VerticalAlignment="Top" Width="120" MaxLength="3"/>
         <Button x:Name="btnAceptar" Content="Aceptar" HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" Width="75" Click="btnAceptar_Click"/>
         <Button x:Name="btnCancelar" Content="Cancelar" HorizontalAlignment="Left" Margin="100,75,0,0" VerticalAlignment="Top" Width="75" Click="btnCancelar_Click"/>
         </Grid>

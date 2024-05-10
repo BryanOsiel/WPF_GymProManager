@@ -40,7 +40,7 @@ namespace WPF_GymProManager
         private void btnCerrar_Click(object sender, RoutedEventArgs e)
         {
             // Mostrar un mensaje de confirmación antes de cerrar la ventana
-            MessageBoxResult result = MessageBox.Show("¿Está seguro de que desea cerrar la aplicación?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+            MessageBoxResult result = MessageBox.Show("¿Está seguro de que desea cerrar sesion?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             // Si el usuario elige "Sí", cerrar la ventana
             if (result == MessageBoxResult.Yes)
@@ -100,6 +100,18 @@ namespace WPF_GymProManager
         private void btnVenta_Click(object sender, RoutedEventArgs e)
         {
             DataContext = new Venta();
+        }
+
+        private void btnCerrarSesion_Click(object sender, RoutedEventArgs e)
+        {
+            // Mostrar un mensaje de confirmación antes de cerrar la ventana
+            MessageBoxResult result = MessageBox.Show("¿Está seguro de que desea cerrar sesion?", "Confirmación", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+            // Si el usuario elige "Sí", cerrar la ventana
+            if (result == MessageBoxResult.Yes)
+            {
+                Close();
+            }
         }
     }
 }

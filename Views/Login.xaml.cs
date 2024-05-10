@@ -13,6 +13,7 @@ namespace WPF_GymProManager
     public partial class Login : Window
     {
         private string connectionString;
+        private MainWindow mainWindow;
         private bool loggedIn = false; // Variable para rastrear si el usuario ha iniciado sesión correctamente
 
         public Login()
@@ -37,16 +38,38 @@ namespace WPF_GymProManager
             // Verificar si el usuario ya ha iniciado sesión
             if (loggedIn)
             {
+                // Si ya está logueado, no permitir iniciar sesión nuevamente
                 return;
             }
 
             // Realizar la autenticación del empleado
             if (AutenticarEmpleado(nombreUsuario, contrasena))
             {
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Closed += (s, args) => this.Close(); // Cerrar esta ventana cuando se cierre la ventana principal
-                mainWindow.Show();
-                loggedIn = true; // Establecer loggedIn en true para evitar abrir otra ventana de inicio de sesión
+                // Verificar si la ventana principal ya está abierta y es válida
+                if (mainWindow == null || mainWindow.IsVisible == false)
+                {
+                    // Si la ventana principal no está abierta o está cerrada, crear una nueva instancia
+                    mainWindow = new MainWindow();
+                    // Asignar el evento Closed para manejar el cierre de la ventana principal
+                    mainWindow.Closed += (s, args) =>
+                    {
+                        loggedIn = false; // Cuando se cierre la ventana principal, establecer loggedIn en false
+                    };
+                }
+
+                // Intentar mostrar la ventana principal
+                try
+                {
+                    mainWindow.Show();
+                    loggedIn = true; // Establecer loggedIn en true para evitar abrir otra ventana de inicio de sesión
+                    tbContrasena.Password = "";
+                    tbUsuario.Text = "";
+                }
+                catch (InvalidOperationException ex)
+                {
+                    // Manejar el error si la ventana principal ya ha sido cerrada
+                    Console.WriteLine($"Error al mostrar la ventana principal: {ex.Message}");
+                }
             }
             else
             {

@@ -160,15 +160,15 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Nombre:" Margin="5"/>
-                    <TextBox Style="{DynamicResource TextBoxStyle}" Grid.Row="0" Grid.Column="1" x:Name="tbNombreEquipo" Width="200" Margin="5"/>
+                    <TextBox Style="{DynamicResource TextBoxStyle}" Grid.Row="0" Grid.Column="1" x:Name="tbNombreEquipo" Width="200" Margin="5" MaxLength="20"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Cantidad:" Margin="5"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbCantidad" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbCantidad" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="3"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Descripción:" Margin="5"/>
                     <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbDescripcion" Width="200" Height="auto" Margin="5" TextAlignment="Left" TextWrapping="Wrap" Style="{DynamicResource TextBoxStyle}"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Estado:" Margin="5"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbEstado" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbEstado" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="10"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Marca:" Margin="5"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbMarca" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbMarca" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="20"/>
                 </Grid>
 
 

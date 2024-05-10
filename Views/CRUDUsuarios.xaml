@@ -159,17 +159,17 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Calle:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Style="{DynamicResource TextBoxStyle}" Grid.Row="0" Grid.Column="2" x:Name="tbCalle" Width="200" Margin="64,5,63,5"/>
+                    <TextBox Style="{DynamicResource TextBoxStyle}" Grid.Row="0" Grid.Column="2" x:Name="tbCalle" Width="200" Margin="64,5,63,5" MaxLength="20"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Número:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="1" Grid.Column="2" x:Name="tbNumero" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="2" x:Name="tbNumero" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}" MaxLength="5"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Colonia:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="2" Grid.Column="2" x:Name="tbColonia" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="2" Grid.Column="2" x:Name="tbColonia" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}" MaxLength="20"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Código Postal:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="3" Grid.Column="2" x:Name="tbCodigoPostal" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="3" Grid.Column="2" x:Name="tbCodigoPostal" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}" MaxLength="5"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Municipio:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="4" Grid.Column="2" x:Name="tbMunicipio" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="4" Grid.Column="2" x:Name="tbMunicipio" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}" MaxLength="20"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Estado:" Margin="5,5,5,5" Grid.ColumnSpan="2"/>
-                    <TextBox Grid.Row="5" Grid.Column="2" x:Name="tbEstado" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="5" Grid.Column="2" x:Name="tbEstado" Width="200" Margin="64,5,63,5" Style="{DynamicResource TextBoxStyle}" MaxLength="20"/>
                 </Grid>
 
                 <!-- Datos Empleado -->
@@ -189,19 +189,19 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Nombre:" Margin="5"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbNombre" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbNombre" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="20"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Apellido Paterno:" Margin="5"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbApellidoPaterno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbApellidoPaterno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="20"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Apellido Materno:" Margin="5"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbApellidoMaterno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" x:Name="tbApellidoMaterno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="20"/>
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Género:" Margin="5"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbGenero" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbGenero" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="10"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Fecha de Nacimiento:" Margin="5"/>
                     <DatePicker Grid.Row="4" Grid.Column="1" x:Name="dpFechaNacimiento" Width="200" Margin="5"/>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Email:" Margin="5"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbEmail" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbEmail" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="30"/>
                     <TextBlock Grid.Row="6" Grid.Column="0" Text="Teléfono:" Margin="5"/>
-                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="tbTelefono" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="6" Grid.Column="1" x:Name="tbTelefono" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="10"/>
                 </Grid>
 
                 <!-- Empleado -->
@@ -221,15 +221,15 @@
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Puesto:" Margin="5"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Turno:" Margin="5"/>
-                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbTurno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" x:Name="tbTurno" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="10"/>
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Fecha de Contratación:" Margin="5"/>
                     <DatePicker Grid.Row="2" Grid.Column="1" x:Name="dpFechaContratacion" Width="200" Margin="5" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Salario:" Margin="5"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSalario" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" x:Name="tbSalario" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="5"/>
                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Código de Acceso:" Margin="5"/>
                     <Button x:Name="btnGenerarCodigoAcceso" Grid.Row="4" Style="{DynamicResource ButtonStyle}" HorizontalAlignment="Left" Margin="241,5,0,5" Width="22" Grid.Column="1" Click="btnGenerarCodigo_Click" Visibility="Hidden"/>
                     <TextBox Grid.Row="4" Grid.Column="1" x:Name="tbCodigoAcceso" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
-                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbPuesto" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="5" Grid.Column="1" x:Name="tbPuesto" Width="200" Margin="5" Style="{DynamicResource TextBoxStyle}" MaxLength="15"/>
                 </Grid>
 
                 <!-- Contraseña -->
@@ -243,7 +243,7 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Contraseña:" Margin="5"/>
-                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbContraseña" Width="200" Margin="97,5,44,5" Style="{DynamicResource TextBoxStyle}"/>
+                    <TextBox Grid.Row="0" Grid.Column="1" x:Name="tbContraseña" Width="200" Margin="97,5,44,5" Style="{DynamicResource TextBoxStyle}" MaxLength="15"/>
                 </Grid>
                 <Grid Grid.Row="8" Grid.Column="1">
                     <Grid.ColumnDefinitions>
