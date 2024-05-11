@@ -250,7 +250,23 @@ namespace WPF_GymProManager.Views
                 return;
             }
 
+            // Verificar si hay efectivo ingresado
+            decimal montoEfectivo = ObtenerMontoEfectivo();
+            if (montoEfectivo <= 0)
+            {
+                MessageBox.Show("Por favor ingresa el monto en efectivo.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
+            // Obtener el monto total de la venta
+            decimal totalVenta = ObtenerMontoTotal();
+
+            // Verificar si el monto en efectivo es suficiente para pagar la venta
+            if (montoEfectivo < totalVenta)
+            {
+                MessageBox.Show("El monto en efectivo ingresado no es suficiente para pagar la venta.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
             // Obtener la conexión a la base de datos desde el archivo de configuración
             string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
@@ -289,6 +305,13 @@ namespace WPF_GymProManager.Views
                         cmd.Parameters.AddWithValue("@Cantidad", producto.Cantidad);
                         cmd.Parameters.AddWithValue("@MontoTotal", producto.MontoTotal);
                         cmd.ExecuteNonQuery();
+
+                        // Actualizar el stock del producto restando la cantidad vendida
+                        query = "UPDATE tproductos SET Stock = Stock - @Cantidad WHERE NombreProducto = @NombreProducto";
+                        cmd = new MySqlCommand(query, connection, transaction);
+                        cmd.Parameters.AddWithValue("@Cantidad", producto.Cantidad);
+                        cmd.Parameters.AddWithValue("@NombreProducto", producto.Nombre);
+                        cmd.ExecuteNonQuery();
                     }
 
                     // Commit de la transacción si se ejecutó correctamente
@@ -314,6 +337,88 @@ namespace WPF_GymProManager.Views
                     MessageBox.Show("Error al registrar la venta: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
+        }
+
+
+        private bool ActualizarStockProductos()
+        {
+            try
+            {
+                // Obtener la conexión a la base de datos desde el archivo de configuración
+                string connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+
+                // Crear una conexión a la base de datos
+                using (MySqlConnection connection = new MySqlConnection(connectionString))
+                {
+                    // Abrir la conexión
+                    connection.Open();
+
+                    // Iniciar una transacción
+                    using (MySqlTransaction transaction = connection.BeginTransaction())
+                    {
+                        foreach (Producto producto in Productos)
+                        {
+                            // Consulta para obtener el stock actual del producto
+                            string queryStock = "SELECT Stock FROM tproductos WHERE NombreProducto = @NombreProducto";
+                            MySqlCommand cmdStock = new MySqlCommand(queryStock, connection, transaction);
+                            cmdStock.Parameters.AddWithValue("@NombreProducto", producto.Nombre);
+                            int stockActual = Convert.ToInt32(cmdStock.ExecuteScalar());
+
+                            // Verificar si hay suficiente stock para la venta
+                            if (stockActual < producto.Cantidad)
+                            {
+                                MessageBox.Show($"No hay suficiente stock para el producto '{producto.Nombre}'.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                transaction.Rollback(); // Cancelar la transacción
+                                return false;
+                            }
+
+                            // Actualizar el stock del producto restando la cantidad vendida
+                            string queryUpdateStock = "UPDATE tproductos SET Stock = @NuevoStock WHERE NombreProducto = @NombreProducto";
+                            MySqlCommand cmdUpdateStock = new MySqlCommand(queryUpdateStock, connection, transaction);
+                            int nuevoStock = stockActual - producto.Cantidad;
+                            cmdUpdateStock.Parameters.AddWithValue("@NuevoStock", nuevoStock);
+                            cmdUpdateStock.Parameters.AddWithValue("@NombreProducto", producto.Nombre);
+                            cmdUpdateStock.ExecuteNonQuery();
+                        }
+
+                        // Commit de la transacción si todo fue exitoso
+                        transaction.Commit();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al actualizar el stock de los productos: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
+
+
+        private decimal ObtenerMontoTotal()
+        {
+            // Obtener el monto total desde el Label lblTotal
+            string contenidoLabel = lblTotal.Content.ToString();
+            string montoTotalStr = contenidoLabel.Replace("Total: ", "").Replace("$", "").Trim();
+            decimal montoTotal;
+            if (decimal.TryParse(montoTotalStr, out montoTotal))
+            {
+                return montoTotal;
+            }
+            return 0;
+        }
+
+        private decimal ObtenerMontoEfectivo()
+        {
+            // Obtener el monto en efectivo desde el Label lblEfectivo
+            string contenidoLabel = lblEfectivo.Content.ToString();
+            string montoEfectivoStr = contenidoLabel.Replace("Efectivo: ", "").Replace("$", "").Trim();
+            decimal montoEfectivo;
+            if (decimal.TryParse(montoEfectivoStr, out montoEfectivo))
+            {
+                return montoEfectivo;
+            }
+            return 0;
         }
 
         private void Efectivo(object sender, RoutedEventArgs e)

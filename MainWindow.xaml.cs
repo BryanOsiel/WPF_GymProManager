@@ -113,5 +113,10 @@ namespace WPF_GymProManager
                 Close();
             }
         }
+
+        private void btnProductos_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new Productos();
+        }
     }
 }

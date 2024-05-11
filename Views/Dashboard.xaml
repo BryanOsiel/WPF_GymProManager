@@ -51,12 +51,12 @@
                 </StackPanel>
             </Border>
 
-            <!-- Asistencia -->
+            <!-- Ventas -->
             <Border BorderBrush="Transparent" BorderThickness="1" Margin="0,30,0,0" Grid.Row="1" Grid.Column="3" VerticalAlignment="Top">
                 <StackPanel>
-                    <fa:IconImage Icon="UserClock" Height="76" Width="145"  Foreground="#455A64"/>
-                    <TextBlock Text="Asistencia" FontSize="20" HorizontalAlignment="Center" Margin="15" Foreground="#455A64"/>
-                    <Label x:Name="lbAsistencia" Content="0" FontSize="50" HorizontalAlignment="Center" Foreground="#455A64"/>
+                    <fa:IconImage Icon="cartshopping" Height="76" Width="145"  Foreground="#455A64"/>
+                    <TextBlock Text="Ventas" FontSize="20" HorizontalAlignment="Center" Margin="15" Foreground="#455A64"/>
+                    <Label x:Name="lbVentas" Content="0" FontSize="50" HorizontalAlignment="Center" Foreground="#455A64"/>
                 </StackPanel>
             </Border>
         </Grid>

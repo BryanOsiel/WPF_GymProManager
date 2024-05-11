@@ -30,7 +30,7 @@ namespace WPF_GymProManager.Views
 
         private void btnRegresar_Click(object sender, RoutedEventArgs e)
         {
-            Content = new Equipo();
+             Content = new Equipo();
         }
 
         private void btnCrear_Click(object sender, RoutedEventArgs e)

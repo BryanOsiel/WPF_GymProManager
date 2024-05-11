@@ -613,7 +613,39 @@
                             </Button>
                         </ListViewItem>
                         <!--#endregion-->
-                        <!-- #region Asistencia -->
+                        <!-- #region Prodcutos -->
+                        <ListViewItem Style="{DynamicResource ListViewStyle}" Height="70">
+                            <Button Style="{DynamicResource BtnListaStyle}" x:Name="btnProductos"
+                                   Height="60"
+                                   Width="200"
+                                   HorizontalAlignment="Left"
+                                   Cursor="Hand"
+                                   Background="Transparent"
+                                   BorderBrush="Transparent" Click="btnProductos_Click">
+                                <Grid Width="200">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <fa:IconImage Icon="bottlewater"
+                                                 Width="20"
+                                                 Foreground="White"
+                                                 Grid.Column="0"
+                                                 HorizontalAlignment="Center"
+                                                 Margin="0,0,15,0"/>
+                                    <TextBlock Text="Productos"
+                                              Grid.Column="1"
+                                              FontWeight="SemiBold"
+                                              FontSize="20"
+                                              Foreground="White"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="Center"
+                                              Margin="0,0,15,0"/>
+                                </Grid>
+                            </Button>
+                        </ListViewItem>
+                        <!--#endregion-->                        
+                        <!-- #region Venta -->
                         <ListViewItem Style="{DynamicResource ListViewStyle}" Height="70">
                             <Button Style="{DynamicResource BtnListaStyle}" x:Name="btnVenta"
                                    Height="60"
@@ -645,7 +677,7 @@
                             </Button>
                         </ListViewItem>
                         <!--#endregion-->
-                        <!-- #region Asistencia -->
+                        <!-- #region Cerrar Sesion -->
                         <ListViewItem Style="{DynamicResource ListViewStyle}" Height="70">
                             <Button Style="{DynamicResource BtnListaStyle}" x:Name="btnCerrarSesion"
                                    Height="60"

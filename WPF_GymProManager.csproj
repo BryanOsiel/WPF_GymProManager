@@ -126,6 +126,9 @@
     <Compile Include="Views\CRUDEquipo.xaml.cs">
       <DependentUpon>CRUDEquipo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\CRUDProductos.xaml.cs">
+      <DependentUpon>CRUDProductos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Dashboard.xaml.cs">
       <DependentUpon>Dashboard.xaml</DependentUpon>
     </Compile>
@@ -147,6 +150,9 @@
     <Compile Include="Views\Miembros.xaml.cs">
       <DependentUpon>Miembros.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Productos.xaml.cs">
+      <DependentUpon>Productos.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Usuarios.xaml.cs">
       <DependentUpon>Usuarios.xaml</DependentUpon>
     </Compile>
@@ -158,6 +164,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\CRUDEquipo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\CRUDProductos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -198,6 +208,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Miembros.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Productos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
