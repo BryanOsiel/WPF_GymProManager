@@ -51,6 +51,27 @@ namespace WPF_GymProManager.Views
                     return;
                 }
 
+                // Validar que los campos de nombre solo contengan letras
+                if (!Regex.IsMatch(tbNombre.Text, @"^[a-zA-Z]+$"))
+                {
+                    MessageBox.Show("El campo de nombre solo debe contener letras.");
+                    return;
+                }
+
+                // Validar que el campo de Apellido Paterno solo contenga letras
+                if (!Regex.IsMatch(tbApellidoPaterno.Text, @"^[a-zA-Z]+$"))
+                {
+                    MessageBox.Show("El campo de Apellido Paterno solo debe contener letras.");
+                    return;
+                }
+
+                // Validar que el campo de Apellido Materno solo contenga letras
+                if (!Regex.IsMatch(tbApellidoMaterno.Text, @"^[a-zA-Z]+$"))
+                {
+                    MessageBox.Show("El campo de Apellido Materno solo debe contener letras.");
+                    return;
+                }
+
                 // Validar que el campo de teléfono solo contenga números y tenga 10 dígitos
                 if (!tbTelefono.Text.All(char.IsDigit) || tbTelefono.Text.Length != 10)
                 {
@@ -422,6 +443,27 @@ namespace WPF_GymProManager.Views
                     string.IsNullOrEmpty(tbCodigoAcceso.Text))
                 {
                     MessageBox.Show("Por favor, complete todos los campos.");
+                    return;
+                }
+
+                // Validar que los campos de nombre solo contengan letras
+                if (!Regex.IsMatch(tbNombre.Text, @"^[a-zA-Z]+$"))
+                {
+                    MessageBox.Show("El campo de nombre solo debe contener letras.");
+                    return;
+                }
+
+                // Validar que el campo de Apellido Paterno solo contenga letras
+                if (!Regex.IsMatch(tbApellidoPaterno.Text, @"^[a-zA-Z]+$"))
+                {
+                    MessageBox.Show("El campo de Apellido Paterno solo debe contener letras.");
+                    return;
+                }
+
+                // Validar que el campo de Apellido Materno solo contenga letras
+                if (!Regex.IsMatch(tbApellidoMaterno.Text, @"^[a-zA-Z]+$"))
+                {
+                    MessageBox.Show("El campo de Apellido Materno solo debe contener letras.");
                     return;
                 }
 
