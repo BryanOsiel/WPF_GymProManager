@@ -15,8 +15,8 @@ namespace WPF_GymProManager.Views
         public Asistencia()
         {
             InitializeComponent();
-            CargarDatos();
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
+            CargarDatos();
         }
 
         void CargarDatos()
@@ -31,10 +31,14 @@ namespace WPF_GymProManager.Views
                                    "FROM tasistencia ta " +
                                    "INNER JOIN tclientes tc ON ta.TClienteID = tc.ID " +
                                    "INNER JOIN tdatosclientes td ON tc.TDatosClientesID = td.ID " +
-                                   "INNER JOIN tmembresias tm ON tc.MembresiaID = tm.ID";
+                                   "INNER JOIN tmembresias tm ON tc.MembresiaID = tm.ID " +
+                                   "WHERE DATE(ta.FechaHoraAsistencia) = @fechaActual";
+
                     MySqlCommand command = new MySqlCommand(query, connection);
+                    command.Parameters.AddWithValue("@fechaActual", DateTime.Now.Date);
+
                     MySqlDataAdapter adapter = new MySqlDataAdapter(command);
-                    System.Data.DataSet dataSet = new System.Data.DataSet();
+                    DataSet dataSet = new DataSet();
                     adapter.Fill(dataSet, "Asistencia");
 
                     // Ordenar el DataView por FechaHoraAsistencia en orden ascendente
